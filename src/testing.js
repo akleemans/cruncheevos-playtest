@@ -13,7 +13,7 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { Scenario, parseRecording } from './scenario-format.js';
-import { TriggerRunner, achievementToTriggerDefinition } from './harness.js';
+import { TriggerRunner, achievementToTriggerDefinition } from './engine/harness.js';
 
 /** Load a scenario folder (recording.txt + optional meta.json). */
 export function loadScenario(dir) {

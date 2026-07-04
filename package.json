@@ -1,25 +1,39 @@
 {
-  "name": "rcheevos-js",
+  "name": "cruncheevos-playtest",
   "version": "0.1.0",
-  "description": "JavaScript port of the rcheevos achievement trigger runtime, for testing RetroAchievements logic against recorded memory",
+  "description": "Playtest RetroAchievements achievements: record emulator memory as Test Scenarios, replay them against cruncheevos achievement logic in tests, and inspect every frame in a viewer",
+  "keywords": [
+    "retroachievements",
+    "cruncheevos",
+    "rcheevos",
+    "achievements",
+    "testing",
+    "emulator"
+  ],
   "type": "module",
-  "main": "src/index.js",
+  "bin": {
+    "cruncheevos-playtest": "bin/cli.js"
+  },
   "exports": {
     ".": "./src/index.js",
-    "./testing": "./src/testing.js"
+    "./testing": "./src/testing.js",
+    "./vitest": "./src/vitest.js"
   },
+  "files": [
+    "bin",
+    "src",
+    "lua",
+    "viewer",
+    "scaffold",
+    "docs",
+    "README.md"
+  ],
   "scripts": {
     "test": "node --test test/*.test.js",
-    "test:scenarios": "vitest run",
-    "viewer": "node tools/viewer/serve.js",
-    "viewer:build": "node tools/viewer/build-static.js",
-    "export-achievements": "node tools/export-achievements.js",
-    "check-watchlist": "node tools/check-watchlist.js",
-    "refresh-labels": "node tools/refresh-scenario-labels.js"
+    "viewer": "node bin/cli.js viewer"
   },
   "license": "MIT",
   "devDependencies": {
-    "esbuild": "^0.28.1",
     "vitest": "^4.1.9"
   }
 }

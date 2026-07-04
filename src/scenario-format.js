@@ -28,7 +28,7 @@
  * loader lives in src/testing.js.
  */
 
-import { bytesFromValues } from './harness.js';
+import { bytesFromValues } from './engine/harness.js';
 
 const SIZE_BYTES = { u8: 1, u16: 2, u32: 4 };
 

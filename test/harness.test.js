@@ -1,134 +1,84 @@
 /**
- * End-to-end tests: run real cruncheevos achievements (from
- * cruncheevos-scripts-main) against synthetic frame recordings and check
- * that they pop on exactly the expected frame.
+ * Runner/harness tests: achievement-object conversion, frame formats, the
+ * waiting state and per-frame stepping. Deliberately decoupled from any real
+ * cruncheevos set - behavior of actual achievements against real recordings
+ * is the consumer's scenario-test layer.
  */
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
 import {
   TriggerRunner, runTrigger, bytesFromValues, achievementToTriggerDefinition,
 } from '../src/index.js';
 
-const here = dirname(fileURLToPath(import.meta.url));
-const scriptsDir = join(here, '..', 'cruncheevos-scripts-main');
-
-/* Monster Force addresses (see cruncheevos-scripts-main/monster-force.js) */
-const gameState = 0x0770;
-const currentLevel = 0x34dd;
-const maxLevelUnlocked = 0x34df;
-const invincibilityCheat = 0x3598;
-const atoms = 0x35a4;
-const rankingBase = 0x35b8;
-
-const GameStateEnum = { LevelSelect: 0x0c, InGame: 0x0f, LevelEnd: 0x11 };
-
-/** One frame of watched memory, as a sparse byte map. */
-function frame(overrides = {}) {
-  return bytesFromValues({
-    [gameState]: GameStateEnum.InGame,
-    [currentLevel]: 0,
-    [maxLevelUnlocked]: 0,
-    [rankingBase]: 0,
-    [atoms]: { value: 0, size: 4 },
-    ...overrides,
-  });
-}
-
-async function loadAchievement(title) {
-  const module = await import(join(scriptsDir, 'monster-force.js'));
-  const achievement = Object.values(module.default.achievements)
-    .find((a) => a.title === title);
-  assert.ok(achievement, `achievement "${title}" not found`);
-  return achievement;
-}
-
-const hasScripts = existsSync(join(scriptsDir, 'monster-force.js')) &&
-                   existsSync(join(scriptsDir, 'node_modules'));
-
-test('cruncheevos Achievement converts to a trigger definition string', { skip: !hasScripts }, async () => {
-  const achievement = await loadAchievement('Welcome to Monsterland');
-  const definition = achievementToTriggerDefinition(achievement);
-  assert.equal(definition,
-    'd0xH35b8=0_0xH35b8>0_0xH34dd=0_0xH770=17_0xH34df=0_P:0xH3598=3.1._' +
-    'A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12');
+/* minimal stand-in with the cruncheevos Achievement shape: an array of
+ * condition groups whose entries stringify to the raw condition syntax */
+const fakeAchievement = (groups) => ({
+  conditions: groups.map((g) => g.map((text) => ({ toString: () => text }))),
 });
 
-test('progression achievement pops exactly when the level is finished', { skip: !hasScripts }, async () => {
-  const achievement = await loadAchievement('Welcome to Monsterland');
+test('cruncheevos Achievement shape converts to a trigger definition string', () => {
+  const achievement = fakeAchievement([
+    ['d0xH35b8=0', '0xH35b8>0', 'P:0xH3598=3.1.'],
+    ['R:0xH770=12'],
+  ]);
+  assert.equal(achievementToTriggerDefinition(achievement),
+    'd0xH35b8=0_0xH35b8>0_P:0xH3598=3.1.SR:0xH770=12');
+
+  /* raw strings pass through untouched */
+  assert.equal(achievementToTriggerDefinition('0xH0001=1'), '0xH0001=1');
+});
+
+test('achievement pops on the exact frame its conditions become true', () => {
+  const achievement = fakeAchievement([
+    ['d0xH0010=0', '0xH0010>0', '0xH0000=17'],
+  ]);
 
   const frames = [];
-  /* frames 0..9: playing Cemetery 1 */
-  for (let i = 0; i < 10; i++) frames.push(frame());
-  /* frame 10: level end screen, ranking gets written */
-  for (let i = 0; i < 5; i++) {
-    frames.push(frame({
-      [gameState]: GameStateEnum.LevelEnd,
-      [rankingBase]: 2,
-      [maxLevelUnlocked]: 0,
-    }));
-  }
+  for (let i = 0; i < 10; i++) frames.push(bytesFromValues({ 0x00: 0x0f, 0x10: 0 }));
+  for (let i = 0; i < 5; i++) frames.push(bytesFromValues({ 0x00: 0x11, 0x10: 2 }));
 
   const { triggeredFrame } = runTrigger(achievement, frames);
   assert.equal(triggeredFrame, 10);
 });
 
-test('achievement does not pop when the invincibility cheat was used', { skip: !hasScripts }, async () => {
-  const achievement = await loadAchievement('Welcome to Monsterland');
+test('latched PauseIf locks a group until a ResetIf alt clears it', () => {
+  const definition = '0xH0010=2_P:0xH0020=3.1.SR:0xH0000=12';
+  const frame = (over = {}) => bytesFromValues({ 0x00: 0x0f, 0x10: 0, 0x20: 2, ...over });
 
   const frames = [];
   for (let i = 0; i < 5; i++) frames.push(frame());
-  /* cheat turned on mid-level, then off again */
-  frames.push(frame({ [invincibilityCheat]: 3 }));
-  for (let i = 0; i < 4; i++) frames.push(frame());
-  /* level finished - PauseIf hit count keeps the core group paused */
-  for (let i = 0; i < 5; i++) {
-    frames.push(frame({
-      [gameState]: GameStateEnum.LevelEnd,
-      [rankingBase]: 2,
-    }));
-  }
+  frames.push(frame({ 0x20: 3 }));                 /* cheat on: pause latches */
+  for (let i = 0; i < 4; i++) frames.push(frame()); /* cheat off again */
+  for (let i = 0; i < 5; i++) frames.push(frame({ 0x10: 2 })); /* would-be pop */
 
-  const { triggeredFrame } = runTrigger(achievement, frames);
-  assert.equal(triggeredFrame, null);
+  assert.equal(runTrigger(definition, frames).triggeredFrame, null);
 
-  /* ...but going back to the level select resets the pause hit, and a
-   * clean second run pops */
+  /* the ResetIf alt (back at the menu) clears the pause hit; clean run pops */
   const frames2 = [
     ...frames,
-    frame({ [gameState]: GameStateEnum.LevelSelect }),
+    frame({ 0x00: 0x0c }),
     ...Array.from({ length: 5 }, () => frame()),
-    frame({ [gameState]: GameStateEnum.LevelEnd, [rankingBase]: 2 }),
+    frame({ 0x10: 2 }),
   ];
-  const result2 = runTrigger(achievement, frames2);
-  assert.equal(result2.triggeredFrame, frames2.length - 1);
+  assert.equal(runTrigger(definition, frames2).triggeredFrame, frames2.length - 1);
 });
 
-test('timed challenge: 800 atoms within the first 5 seconds', { skip: !hasScripts }, async () => {
-  const achievement = await loadAchievement('Diagonal Thinking');
-  /* NOTE: compose raw watch values first and expand to bytes once - mixing
-   * an already-expanded byte map with multi-byte entries for the same
-   * address would leave stale bytes behind */
-  const cemetery2 = (atomCount) => bytesFromValues({
-    [gameState]: GameStateEnum.InGame,
-    [currentLevel]: 1,
-    [atoms]: { value: atomCount, size: 4 },
-  });
+test('AddHits time window locks after the frame budget is exceeded', () => {
+  /* pop when 0x10 reaches 100+ within the first 30 frames of 0x00=15 */
+  const definition =
+    'N:0xH0001=1_C:0xH0000=15_P:0=1.30._d0x 0010<100_T:0x 0010>=100_0xH0001=1_0xH0000=15';
+  const frame = (v) => bytesFromValues({ 0x00: 15, 0x01: 1, 0x10: { value: v, size: 2 } });
 
-  /* atoms cross 800 on frame 50: should pop exactly there */
-  const runner = new TriggerRunner(achievement);
-  for (let i = 0; i < 60; i++) runner.tick(cemetery2(i * 16)); /* 800 at frame 50 */
-  assert.equal(runner.triggeredFrame, 50);
+  /* crosses 100 on frame 20: pops there */
+  const fast = [];
+  for (let i = 0; i < 25; i++) fast.push(frame(i * 5));
+  assert.equal(runTrigger(definition, fast).triggeredFrame, 20);
 
-  /* atoms cross 800 only after 300 in-game frames: the PauseIf hit target
-   * locks the group, no pop */
-  const verySlow = [];
-  for (let i = 0; i < 500; i++) verySlow.push(cemetery2(i * 2)); /* 800 at frame 400 */
-  const slowResult = runTrigger(achievement, verySlow);
-  assert.equal(slowResult.triggeredFrame, null);
+  /* crosses 100 only on frame 50: the PauseIf hit target locked at 30 */
+  const slow = [];
+  for (let i = 0; i < 60; i++) slow.push(frame(i * 2));
+  assert.equal(runTrigger(definition, slow).triggeredFrame, null);
 });
 
 test('waiting state: no pop when conditions are already true on frame 0', () => {

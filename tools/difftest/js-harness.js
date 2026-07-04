@@ -4,7 +4,7 @@
  * fuzzer can run it in-process.
  */
 
-import { parseTrigger } from '../../src/trigger.js';
+import { parseTrigger } from '../../src/engine/trigger.js';
 
 export function runCase(definition, frames /* array of Uint8Array */) {
   const lines = [];

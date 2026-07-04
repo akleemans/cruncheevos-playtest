@@ -7,7 +7,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { parseRecording, serializeRecording, Scenario } from '../src/scenario-format.js';
 import { parseCodeNotes, codeNotesToWatchlist } from '../src/code-notes.js';
-import { conditionSpans } from '../src/trigger.js';
+import { conditionSpans } from '../src/engine/trigger.js';
 
 test('sparse recording parses, expands held cells, and round-trips', () => {
   const text = [
