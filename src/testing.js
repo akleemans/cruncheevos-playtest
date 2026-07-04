@@ -12,22 +12,51 @@
 
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Scenario, parseRecording } from './scenario-format.js';
 import { TriggerRunner, achievementToTriggerDefinition } from './engine/harness.js';
 
-/** Load a scenario folder (recording.txt + optional meta.json). */
+const asPath = (dir) => (dir instanceof URL || String(dir).startsWith('file:'))
+  ? fileURLToPath(dir) : dir;
+
+/**
+ * Load a scenario folder (recording.txt + optional meta.json).
+ * Accepts a path or a file: URL, so tests can resolve scenarios relative to
+ * themselves: loadScenario(new URL('../scenarios/x', import.meta.url)).
+ */
 export function loadScenario(dir) {
-  const csvPath = join(dir, 'recording.txt');
-  if (!existsSync(csvPath))
+  dir = asPath(dir);
+  const recordingPath = join(dir, 'recording.txt');
+  if (!existsSync(recordingPath))
     throw new Error(`no recording.txt in ${dir} - is this a scenario folder?`);
 
-  const { columns, rows } = parseRecording(readFileSync(csvPath, 'utf8'));
+  const { columns, rows } = parseRecording(readFileSync(recordingPath, 'utf8'));
 
   let meta = {};
   const metaPath = join(dir, 'meta.json');
   if (existsSync(metaPath)) meta = JSON.parse(readFileSync(metaPath, 'utf8'));
 
   return new Scenario({ meta, columns, rows });
+}
+
+/**
+ * Load a scenario for a test; returns { scenario, missing } where `missing`
+ * explains why the test cannot run yet (folder or markers absent). Pair with
+ * scenarioIt() from 'cruncheevos-playtest/vitest' so unrecorded scenarios
+ * skip with instructions instead of failing.
+ */
+export function requireScenario(dir, ...markers) {
+  dir = asPath(dir);
+  const name = dir.split('/').filter(Boolean).pop();
+  if (!existsSync(join(dir, 'recording.txt')))
+    return { scenario: null, missing: `scenario "${name}" not recorded yet` };
+
+  const scenario = loadScenario(dir);
+  const absent = markers.filter((m) => scenario.markers[m] === undefined);
+  if (absent.length)
+    return { scenario, missing: `set marker(s) [${absent.join(', ')}] on "${name}" in the viewer` };
+
+  return { scenario, missing: null };
 }
 
 /**

@@ -106,23 +106,9 @@
 </style>
 </head>
 <body>
-<div id="file-hint" style="display:none; padding:10px 14px; background:#5a3a1a; color:#f0d9b5; font-size:13px">
-  This is the dev-server page and cannot run from <code>file://</code> (browsers block
-  module loading between local files). Either run <b>npm run viewer</b> and open
-  http://localhost:8123, or open the self-contained build
-  <b>tools/viewer/dist/scenario-viewer.html</b> (regenerate with <b>npm run viewer:build</b>).
-</div>
-<script>
-  /* viewer.js sets __viewerBooted on load; if it can't load (file://), explain */
-  setTimeout(function () {
-    if (!window.__viewerBooted) document.getElementById('file-hint').style.display = 'block';
-  }, 500);
-</script>
 <header>
   <h1>Scenario Viewer</h1>
-  <button id="btn-open-folder" title="Open a scenarios folder from disk">📁 Open folder</button>
-  <input type="file" id="folder-input" webkitdirectory multiple style="display:none">
-  <label>Scenario <select id="scenario-select"></select></label>
+    <label>Scenario <select id="scenario-select"></select></label>
   <span class="desc" id="scenario-desc"></span>
   <span class="hint" id="save-hint"></span>
   <label>Achievement <select id="achievement-select"><option value="">(none)</option></select></label>
