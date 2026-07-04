@@ -1,0 +1,387 @@
+[
+  {
+    "set": "Monster Force",
+    "title": "Welcome to Monsterland",
+    "definition": "d0xH35b8=0_0xH35b8>0_0xH34dd=0_0xH770=17_0xH34df=0_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "No Time to Die",
+    "definition": "d0xH35bb=0_0xH35bb>0_0xH34dd=3_0xH770=17_0xH34df=3_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "It Takes a Village",
+    "definition": "d0xH35bf=0_0xH35bf>0_0xH34dd=7_0xH770=17_0xH34df=7_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Green Thumb",
+    "definition": "d0xH35c3=0_0xH35c3>0_0xH34dd=11_0xH770=17_0xH34df=11_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Platonic Tale",
+    "definition": "d0xH35c7=0_0xH35c7>0_0xH34dd=15_0xH770=17_0xH34df=15_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Temple Tantrum",
+    "definition": "d0xH35cb=0_0xH35cb>0_0xH34dd=19_0xH770=17_0xH34df=19_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Rise of the Mummies",
+    "definition": "d0xH35cf=0_0xH35cf>0_0xH34dd=23_0xH770=17_0xH34df=23_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Sky High",
+    "definition": "d0xH35d3=0_0xH35d3>0_0xH34dd=27_0xH770=17_0xH34df=27_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Industrial Revolution",
+    "definition": "d0xH35d7=0_0xH35d7>0_0xH34dd=31_0xH770=17_0xH34df=31_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Pumpkin Mash",
+    "definition": "d0xH35dc=0_0xH35dc>0_0xH34dd=36_0xH770=17_0xH34df=36_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Walking Through Walls",
+    "definition": "A:d0x 1820_A:d0x 1824_A:d0x 1828_A:d0x 182c_A:d0x 1838_A:d0x 183c_A:d0x 1840_d0x 1844>0_A:0x 1820_A:0x 1824_A:0x 1828_A:0x 182c_A:0x 1838_A:0x 183c_A:0x 1840_0x 1844=0_0xH770=15_0xH34dd=0_P:0xH3598=3.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Diagonal Thinking",
+    "definition": "N:0xH34dd=1_C:0xH770=15_P:0=1.300._d0xX35a4<800_T:0xX35a4>=800_0xH34dd=1_0xH770=15_P:0xH3598=3.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "Every Atom Counts",
+    "definition": "0xH34dd=2_d0xH770=15_0xH770=17_0xX35a4>=100_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "Monster Force",
+    "title": "In the Blink of an Eye",
+    "definition": "0xH34dd=3_d0xH770=15_T:0xH770=17_0x 359c<600_P:0xH3598=3.1._A:0xH360c&65_N:0=65_P:0xH360d=255.1.SR:0xH770=12"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Mysterious Machine",
+    "definition": "d0xHc27c=0_0xHc27c=1_0xHde09=0"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Overachiever",
+    "definition": "B:d0xHc217_d0xHc276<20_B:0xHc217_0xHc276=20_0xHc276>=20_0xHde09<7"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "You Got Sponsatility Now",
+    "definition": "d0xHc218=2_0xHc218=3_0xHde09=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "The Key to Escape",
+    "definition": "d0xHc218=2_0xHc218=3_0xHde09=1_0xHc259!=8_0xHc259=0xHc21f"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Into My Arms, Brother!",
+    "definition": "d0xHc218=2_0xHc218=3_0xHde09=1_0xHc259=8"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "All He Does Is Cry and Poop",
+    "definition": "d0xHc218=2_0xHc218=3_0xHde09=4_0xHc898=142"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Baby Steps",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=0_0xHc259=3"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Hang on to Your Diapies, Babies",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=0_0xHc259=3_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Okey-Dokey Jones",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=6"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "The Bestest",
+    "definition": "0xLde29<15_A:0xLde2e_A:0xLde2d*10_A:0xLde2c*100_A:0xLde2b*1000_A:0xLde2a*10000_A:0xLde29*100000_0>124000_A:d0xLde2e_A:d0xLde2d*10_A:d0xLde2c*100_A:d0xLde2b*1000_A:d0xLde2a*10000_A:d0xLde29*100000_0=124000"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Baby Store",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=1_0xHc259=8"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "All Natural Zen Experience",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=1_0xHc259=8_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Monkey Circus",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Real Monkey Business",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=2_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "It Looks Kinda Like the Park",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=3"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "More Fun than Picking Noses",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=3_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Sleep and Dream the Night Away",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=4"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Actual Danger",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=4_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Aqua Reptar",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=5"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "The Ultimate in Toddler Transportation",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=5_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "This Place Gives Me the Juicebumps",
+    "definition": "d0xHc0bd=0_0xHc0bd=1_0xHde09=6_0xHde02=2"
+  },
+  {
+    "set": "The Rugrats Movie",
+    "title": "Minimalist",
+    "definition": "d0xHc0bd=0_T:0xHc0bd=1_0xHde09=5_0xHc276<=1"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Source of Life",
+    "definition": "0xHc2d3=1_0xHc0fa>d0xHc0fa_0xHc0fa!=255_0xHde80<d0xHde80_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Welcome, Warrior",
+    "definition": "0xHc0fb=3_d0xHdf59=0_0xHdf59=1_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Finally Some Firepower",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0SO:0xRdc69=1_0xTdc74=1_d0xOdc66=0_0xOdc66=1_0xHdf96=0SO:0xRdc69=1_0xTdc74=1_d0xOdc79=0_0xOdc79=1_0xHdf96=3SO:0xOdc66=1_0xOdc79=1_d0xRdc69=0_0xRdc69=1_0xHdf96=0SO:0xOdc66=1_0xOdc79=1_d0xTdc74=0_0xTdc74=1_0xHdf96=2"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Enhanced Portal Activation",
+    "definition": "0xHc0fb=3_d0xHdf59=0_0xHdf59=1_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Extinction",
+    "definition": "Q:0xHdf96<=3_A:d0xRdc66_A:d0xNdc67_A:d0xPdc67_A:d0xNdc68_A:d0xRdc68_A:d0xTdc68_A:d0xPdc66_A:d0xSdc66_A:d0xQdc67_A:d0xOdc68_A:d0xSdc68_A:d0xPdc69_A:d0xQdc69_A:d0xSdc69_A:d0xPdc6a_A:d0xTdc69_A:d0xNdc6e_A:d0xSdc6d_A:d0xTdc6c_A:d0xSdc6c_A:d0xOdc6d_A:d0xOdc6e_A:d0xMdc6e_A:d0xQdc6d_A:d0xPdc6d_A:d0xMdc6d_A:d0xMdc78_A:d0xOdc78_A:d0xRdc78_A:d0xTdc78_A:d0xMdc79_A:d0xPdc79_A:d0xSdc79_A:d0xTdc79_A:d0xNdc7a_A:d0xOdc7a_A:d0xRdc7a_A:d0xNdc72_A:d0xOdc72_A:d0xRdc72_A:d0xSdc72_A:d0xNdc73_A:d0xPdc73_A:d0xQdc73_A:d0xSdc73_A:d0xMdc74_A:d0xNdc74_A:d0xOdc74_d0xQdc74<49_A:0xRdc66_A:0xNdc67_A:0xPdc67_A:0xNdc68_A:0xRdc68_A:0xTdc68_A:0xPdc66_A:0xSdc66_A:0xQdc67_A:0xOdc68_A:0xSdc68_A:0xPdc69_A:0xQdc69_A:0xSdc69_A:0xPdc6a_A:0xTdc69_A:0xNdc6e_A:0xSdc6d_A:0xTdc6c_A:0xSdc6c_A:0xOdc6d_A:0xOdc6e_A:0xMdc6e_A:0xQdc6d_A:0xPdc6d_A:0xMdc6d_A:0xMdc78_A:0xOdc78_A:0xRdc78_A:0xTdc78_A:0xMdc79_A:0xPdc79_A:0xSdc79_A:0xTdc79_A:0xNdc7a_A:0xOdc7a_A:0xRdc7a_A:0xNdc72_A:0xOdc72_A:0xRdc72_A:0xSdc72_A:0xNdc73_A:0xPdc73_A:0xQdc73_A:0xSdc73_A:0xMdc74_A:0xNdc74_A:0xOdc74_M:0xQdc74=49_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Into the Jungle",
+    "definition": "0xHc0fb=3_d0xHdf59=1_0xHdf59=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Hunter's Peril",
+    "definition": "0xHc0fb=3_d0xHdf59=1_0xHdf59=2_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Now We're Talking",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0S0xOdc9c=1_d0xMdc68=0_0xMdc68=1_0xHdf96=4S0xMdc68=1_d0xOdc9c=0_0xOdc9c=1_0xHdf96=13"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Finding the Right Key",
+    "definition": "0xHc2d3=1_0xHdf96>=4_0xHdf96<=15_d0xHc0fb=0_T:0xHc0fb=1_P:0xRc2f4=1.1._0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0SR:0xHdf96=63"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "The Invention of Parkour",
+    "definition": "0xHc0fb=3_d0xHdf59=2_0xHdf59=3_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Mini Guns, Maxi Effect",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0S0xPdc6d=1_d0xQdc84=0_0xQdc84=1_0xHdf96=21S0xQdc84=1_d0xPdc6d=0_0xPdc6d=1_0xHdf96=17"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Blessing of the Ancients",
+    "definition": "0xHc0fb=3_d0xHdf59=2_0xHdf59=3_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Turbo Turok",
+    "definition": "P:0xHc1f4=1_N:0xHdf96>=16_C:0xHdf96<=22_P:0=1.14400._d0xHdf59=2_T:0xHdf59=3_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0SN:0xHc0fb=0_R:0xHdf96<16_N:0xHc0fb=0_R:0xHdf96>22"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Swimming Upwards",
+    "definition": "0xHc0fb=3_d0xHdf59=3_0xHdf59=4_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Anti-Matter Plasma Beams and Grenades",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0SO:0xOdc66=1_0xOdc96=1_d0xOdc6a=0_0xOdc6a=1_0xHdf96=23S0xOdc6a=1_d0xOdc66=0_0xOdc66=1_0xHdf96=23S0xOdc6a=1_d0xOdc96=0_0xOdc96=1_0xHdf96=31"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Trial of the Ruins",
+    "definition": "0xHc0fb=3_d0xHdf59=3_0xHdf59=4_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Triangulist",
+    "definition": "N:0xHdf96>=23_Q:0xHdf96<=32_A:d0xMdc66_A:d0xPdc66_A:d0xMdc68_A:d0xTdc67_A:d0xNdc68_A:d0xPdc6a_A:d0xQdc6a_A:d0xOdc6c_A:d0xMdc7e_A:d0xNdc7e_A:d0xOdc7e_A:d0xPdc7e_A:d0xQdc78_A:d0xTdc78_A:d0xPdc90_A:d0xQdc91_A:d0xTdc92_A:d0xPdc93_A:d0xQdc93_A:d0xMdc97_A:d0xNdc97_A:d0xOdc97_A:d0xPdc97_A:d0xQdc97_A:d0xRdc97_A:d0xMdc96_A:d0xNdc96_A:d0xPdc96_A:d0xQdc96_d0xTdc96<30_A:0xMdc66_A:0xPdc66_A:0xMdc68_A:0xTdc67_A:0xNdc68_A:0xPdc6a_A:0xQdc6a_A:0xOdc6c_A:0xMdc7e_A:0xNdc7e_A:0xOdc7e_A:0xPdc7e_A:0xQdc78_A:0xTdc78_A:0xPdc90_A:0xQdc91_A:0xTdc92_A:0xPdc93_A:0xQdc93_A:0xMdc97_A:0xNdc97_A:0xOdc97_A:0xPdc97_A:0xQdc97_A:0xRdc97_A:0xMdc96_A:0xNdc96_A:0xPdc96_A:0xQdc96_M:0xTdc96=30_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Master Blaster",
+    "definition": "d0xHc1a8<99_0xHc1a8=99_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Swinging Knives",
+    "definition": "0xHc0fb=3_d0xHdf59=4_0xHdf59=5_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Four Is Better than One",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0Sd0xRdc79=0_0xRdc79=1_0xHdf96=36Sd0xPdc66=0_0xPdc66=1_0xHdf96=33"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Leap of Faith",
+    "definition": "0xHc0fb=3_d0xHdf59=4_0xHdf59=5_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Spirit Protected",
+    "definition": "N:0xNc0fd=1_C:0xHc0fa<d0xHc0fa_P:0=1.1._0xHc0fb=3_d0xHdf59=4_T:0xHdf59=5_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0S0xHdee4=0_0xHc0f9=9S0xHdee4=1_0xHc0f9=7S0xHdee4=2_0xHc0f9=5SR:0xHc0fa=255_0=1"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Hoppin' in the Treetops",
+    "definition": "0xHc0fb=3_d0xHdf59=5_0xHdf59=6_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Fusion Kitchen",
+    "definition": "0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0S0xNdca2=1_d0xSdc72=0_0xSdc72=1_0xHdf96=42S0xSdc72=1_d0xNdca2=0_0xNdca2=1_0xHdf96=50"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Canopy Conqueror",
+    "definition": "0xHc0fb=3_d0xHdf59=5_0xHdf59=6_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Knives Out",
+    "definition": "0xHdf96>=40_T:0xHc0fb=3_d0xHdf59=5_T:0xHdf59=6_P:0xHfffc!=0.1._0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0SN:d0xHdf96=63_R:0xHdf96=40"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Lost in the Lands",
+    "definition": "0xHc0fb=3_d0xHdf59=6_0xHdf59=7_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Well Prepared",
+    "definition": "N:0xHdf96>=52_Q:0xHdf96<=57_A:d0xRdc66_A:d0xMdc6a_A:d0xTdc6e_A:d0xOdc78_A:d0xNdc7e_A:d0xOdc84_d0xMdc85<7_A:0xRdc66_A:0xMdc6a_A:0xTdc6e_A:0xOdc78_A:0xNdc7e_A:0xOdc84_M:0xMdc85=7_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Interdimensional Sewer",
+    "definition": "0xHc0fb=3_d0xHdf59=6_0xHdf59=7_0xHdee4=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Nature Lover",
+    "definition": "0xHdf96>=52_A:0xQdc66_A:0xNdc67_A:0xQdc67_A:0xSdc67_A:0xOdc68_A:0xRdc68_A:0xTdc68_A:0xNdc69_A:0xTdc69_A:0xNdc6a_A:0xQdc86_A:0xSdc86_A:0xPdc84_A:0xNdc6e_A:0xQdc6e_A:0xMdc6d_A:0xOdc6d_A:0xSdc6d_A:0xTdc6d_A:0xQdc6c_0xSdc6c=0_T:0xHc0fb=3_d0xHdf59=6_T:0xHdf59=7_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Son of Stone",
+    "definition": "0xHdf96=62_d0xHc0ff=0_0xHc0ff=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Armed to the Teeth",
+    "definition": "A:d0xHc1b0_A:d0xHc1b1_A:d0xHc1b2_A:d0xHc1b3_A:d0xHc1b4_A:d0xHc1b5_A:d0xHc1b6_A:d0xHc1b7_A:d0xHc1b8_A:d0xHc1b9_A:d0xHc1ba_d0xHc1bb<12_A:0xHc1b0_A:0xHc1b1_A:0xHc1b2_A:0xHc1b3_A:0xHc1b4_A:0xHc1b5_A:0xHc1b6_A:0xHc1b7_A:0xHc1b8_A:0xHc1b9_A:0xHc1ba_0xHc1bb=12_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Apparatus of Ultimate Destruction",
+    "definition": "d0xHc1bb=0_0xHc1bb=1_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "I Am Turok!!!",
+    "definition": "0xHdf96=62_d0xHc0ff=0_0xHc0ff=2_0xHdee4>=1_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Fallen Tyrant",
+    "definition": "0xHdf96=60_d0xHc0fe=0_0xHc0fe=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Doing Things the Hard Way",
+    "definition": "0xHdf96=62_d0xHc0ff=0_0xHc0ff=2_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0S0xHc1bb=1_0xHc1ad=3S0xHc1bb=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "So Long, Hunter",
+    "definition": "0xHdf96=22_N:d0xHdcaf=0_0xHdcaf=82.1._T:0xHc0fb>d0xHc0fb_R:0xHc0f9<d0xHc0f9_R:0xHdf96!=22"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Old Grounds, New Secrets",
+    "definition": "A:d0xPdf45_A:d0xPdf46_d0xPdf47<3_A:0xPdf45_A:0xPdf46_0xPdf47=3_O:0xHdf96=1_O:0xHdf96=14_0xHdf96=19_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Guarded by Mantis",
+    "definition": "A:d0xPdf48_d0xPdf49<2_A:0xPdf48_0xPdf49=2_O:0xHdf96=26_0xHdf96=34_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "Assembly Required",
+    "definition": "A:d0xPdf4a_A:d0xPdf4b_d0xPdf4c<3_A:0xPdf4a_A:0xPdf4b_0xPdf4c=3_O:0xHdf96=42_O:0xHdf96=54_0xHdf96=60_0xHc0e2=0_0xHc0e3=0_0xHc0e4=0_0xHc0e5=0_0xHc0e6=0"
+  },
+  {
+    "set": "Turok: Battle of the Bionosaurs",
+    "title": "High Energy Diet",
+    "definition": "0xHdf96=60_N:d0xHdcaf=0_0xHdcaf=240.1._T:0xHc0fe=2_R:0xHfffc!=5_R:0xHdf96!=60"
+  }
+]

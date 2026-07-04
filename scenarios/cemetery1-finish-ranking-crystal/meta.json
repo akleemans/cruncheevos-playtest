@@ -1,0 +1,575 @@
+{
+  "name": "cemetery1-finish-ranking-crystal",
+  "description": "Level 1 finish with ranking crystal",
+  "game": "Monster Force",
+  "console": "GBA",
+  "firstFrame": 9510,
+  "markers": {
+    "score-screen": 9640,
+    "rank-written": 9642,
+    "save-screen": 11965,
+    "level-select": 12009
+  },
+  "addresses": [
+    {
+      "address": "0x0770",
+      "size": "u8",
+      "label": "Global game state"
+    },
+    {
+      "address": "0x0778",
+      "size": "u8",
+      "label": "Game state substate (see 0x0770)"
+    },
+    {
+      "address": "0x077c",
+      "size": "u8",
+      "label": "Player status"
+    },
+    {
+      "address": "0x0780",
+      "size": "u8",
+      "label": "Fire action substate (if 0x077c = 7)"
+    },
+    {
+      "address": "0x07d2",
+      "size": "u8",
+      "label": "Weapon charging frame counter (0x00 -> 0x3c for first time shots, 0x00 -> 0x38 for consecutive shots)"
+    },
+    {
+      "address": "0x07e0",
+      "size": "u8",
+      "label": "Amount of keys"
+    },
+    {
+      "address": "0x07f0",
+      "size": "u8",
+      "label": "Current health"
+    },
+    {
+      "address": "0x07f8",
+      "size": "u32",
+      "label": "Amount of Atoms in bank"
+    },
+    {
+      "address": "0x07fc",
+      "size": "u8",
+      "label": "Tools slot 1"
+    },
+    {
+      "address": "0x07fd",
+      "size": "u8",
+      "label": "Tools slot 2 (see 0x07fc)"
+    },
+    {
+      "address": "0x07fe",
+      "size": "u8",
+      "label": "Tools slot 3 (see 0x07fc)"
+    },
+    {
+      "address": "0x07ff",
+      "size": "u8",
+      "label": "Tools slot 4 (see 0x07fc)"
+    },
+    {
+      "address": "0x0800",
+      "size": "u8",
+      "label": "Relics slot 1"
+    },
+    {
+      "address": "0x0801",
+      "size": "u8",
+      "label": "Relics slot 2 (see 0x0800)"
+    },
+    {
+      "address": "0x0802",
+      "size": "u8",
+      "label": "Relics slot 3 (see 0x0800)"
+    },
+    {
+      "address": "0x0803",
+      "size": "u8",
+      "label": "Relics slot 4 (see 0x0800)"
+    },
+    {
+      "address": "0x082c",
+      "size": "u8",
+      "label": "Tool selection"
+    },
+    {
+      "address": "0x0850",
+      "size": "u8",
+      "label": "Max. health"
+    },
+    {
+      "address": "0x0852",
+      "size": "u8",
+      "label": "Attack level"
+    },
+    {
+      "address": "0x0853",
+      "size": "u8",
+      "label": "Force level"
+    },
+    {
+      "address": "0x085a",
+      "size": "u16",
+      "label": "Normal shots fired"
+    },
+    {
+      "address": "0x085e",
+      "size": "u16",
+      "label": "Power shots fired"
+    },
+    {
+      "address": "0x0868",
+      "size": "u16",
+      "label": "Hits taken this stage (0 = no-hit bonus)"
+    },
+    {
+      "address": "0x0870",
+      "size": "u8",
+      "label": "Direction facing"
+    },
+    {
+      "address": "0x0878",
+      "size": "u8",
+      "label": "Character selected"
+    },
+    {
+      "address": "0x1820",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 1"
+    },
+    {
+      "address": "0x1824",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 2"
+    },
+    {
+      "address": "0x1828",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 3"
+    },
+    {
+      "address": "0x182c",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 4"
+    },
+    {
+      "address": "0x1838",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 5"
+    },
+    {
+      "address": "0x183c",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 6"
+    },
+    {
+      "address": "0x1840",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 7"
+    },
+    {
+      "address": "0x1844",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin 8"
+    },
+    {
+      "address": "0x18a4",
+      "size": "u16",
+      "label": "Cemetery 1 - hidden pumpkin in wagon"
+    },
+    {
+      "address": "0x1be0",
+      "size": "u8",
+      "label": "Cemetery Shadow boss health"
+    },
+    {
+      "address": "0x1d00",
+      "size": "u8",
+      "label": "Village Shadow boss health"
+    },
+    {
+      "address": "0x34dd",
+      "size": "u8",
+      "label": "Current level"
+    },
+    {
+      "address": "0x34df",
+      "size": "u8",
+      "label": "Maximum level unlocked (0-24)"
+    },
+    {
+      "address": "0x34f3",
+      "size": "u8",
+      "label": "Switch 1 activated"
+    },
+    {
+      "address": "0x34f4",
+      "size": "u8",
+      "label": "Switch 2 activated"
+    },
+    {
+      "address": "0x34f5",
+      "size": "u8",
+      "label": "Switch 3 activated"
+    },
+    {
+      "address": "0x34f6",
+      "size": "u8",
+      "label": "Switch 4 activated"
+    },
+    {
+      "address": "0x34f7",
+      "size": "u8",
+      "label": "Switch 5 activated"
+    },
+    {
+      "address": "0x34f8",
+      "size": "u8",
+      "label": "Switch 6 activated"
+    },
+    {
+      "address": "0x34f9",
+      "size": "u8",
+      "label": "Switch 7 activated"
+    },
+    {
+      "address": "0x34fa",
+      "size": "u8",
+      "label": "Switch 8 activated"
+    },
+    {
+      "address": "0x34fb",
+      "size": "u8",
+      "label": "Switch 9 activated"
+    },
+    {
+      "address": "0x34fc",
+      "size": "u8",
+      "label": "Switch 10 activated"
+    },
+    {
+      "address": "0x34fd",
+      "size": "u8",
+      "label": "Switch 11 activated"
+    },
+    {
+      "address": "0x3540",
+      "size": "u8",
+      "label": "(wip) Timed switch (Garden Trial)"
+    },
+    {
+      "address": "0x3544",
+      "size": "u8",
+      "label": "Number of objects (pumpkins, enemies) loaded in extended viewport"
+    },
+    {
+      "address": "0x355c",
+      "size": "u8",
+      "label": "Score screen: Time bonus achieved"
+    },
+    {
+      "address": "0x3568",
+      "size": "u32",
+      "label": "Viewport position horizontally"
+    },
+    {
+      "address": "0x356c",
+      "size": "u32",
+      "label": "Viewport position vertically"
+    },
+    {
+      "address": "0x3588",
+      "size": "u32",
+      "label": "Last teleport/start position horizontally"
+    },
+    {
+      "address": "0x358c",
+      "size": "u32",
+      "label": "Last teleport/start position vertically"
+    },
+    {
+      "address": "0x3598",
+      "size": "u8",
+      "label": "Invincibility cheat enabled"
+    },
+    {
+      "address": "0x359c",
+      "size": "u16",
+      "label": "Level timer in frames (1/60 of a second)"
+    },
+    {
+      "address": "0x35a0",
+      "size": "u8",
+      "label": "Amount of objects (pumpkins, enemies) destroyed"
+    },
+    {
+      "address": "0x35a4",
+      "size": "u32",
+      "label": "Atoms collected in current level"
+    },
+    {
+      "address": "0x35a8",
+      "size": "u16",
+      "label": "Total shots fired"
+    },
+    {
+      "address": "0x35b8",
+      "size": "u8",
+      "label": "Cemetery Level 1 ranking (ladder 1)"
+    },
+    {
+      "address": "0x35b9",
+      "size": "u8",
+      "label": "Cemetery Level 2 ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35ba",
+      "size": "u8",
+      "label": "Cemetery Trial ranking (ladder 2)"
+    },
+    {
+      "address": "0x35bb",
+      "size": "u8",
+      "label": "Cemetery Shadow ranking (ladder 3)"
+    },
+    {
+      "address": "0x35bc",
+      "size": "u8",
+      "label": "Village Level 1 ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35bd",
+      "size": "u8",
+      "label": "Village Level 2 ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35be",
+      "size": "u8",
+      "label": "Village Trial ranking (ladder 4)"
+    },
+    {
+      "address": "0x35bf",
+      "size": "u8",
+      "label": "Village Shadow ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35c0",
+      "size": "u8",
+      "label": "Garden Level 1 ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35c1",
+      "size": "u8",
+      "label": "Garden Level 2 ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35c2",
+      "size": "u8",
+      "label": "Garden Trial ranking (ladder 1, see 0x35b8)"
+    },
+    {
+      "address": "0x35c3",
+      "size": "u8",
+      "label": "Pumpkin Boss ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35c4",
+      "size": "u8",
+      "label": "Atlantis Level 1 ranking (ladder 5)"
+    },
+    {
+      "address": "0x35c5",
+      "size": "u8",
+      "label": "Atlantis Level 2 ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35c6",
+      "size": "u8",
+      "label": "Atlantis Trial ranking (ladder 2, see 0x35ba)"
+    },
+    {
+      "address": "0x35c7",
+      "size": "u8",
+      "label": "Atlantis Shadow ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35c8",
+      "size": "u8",
+      "label": "Temple Level 1 ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35c9",
+      "size": "u8",
+      "label": "Temple Level 2 ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35ca",
+      "size": "u8",
+      "label": "Temple Trial ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35cb",
+      "size": "u8",
+      "label": "Dragon Boss ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35cc",
+      "size": "u8",
+      "label": "Desert Level 1 ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35cd",
+      "size": "u8",
+      "label": "Desert Level 2 ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35ce",
+      "size": "u8",
+      "label": "Desert Trial ranking (ladder 5, see 0x35c4)"
+    },
+    {
+      "address": "0x35cf",
+      "size": "u8",
+      "label": "Desert Shadow ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35d0",
+      "size": "u8",
+      "label": "Clouds Level 1 ranking (ladder 6)"
+    },
+    {
+      "address": "0x35d1",
+      "size": "u8",
+      "label": "Clouds Level 2 ranking (ladder 6, see 0x35d0)"
+    },
+    {
+      "address": "0x35d2",
+      "size": "u8",
+      "label": "Clouds Trial ranking (ladder 2, see 0x35ba)"
+    },
+    {
+      "address": "0x35d3",
+      "size": "u8",
+      "label": "Clouds Shadow ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35d4",
+      "size": "u8",
+      "label": "Factory Level 1 ranking (ladder 6, see 0x35d0)"
+    },
+    {
+      "address": "0x35d5",
+      "size": "u8",
+      "label": "Factory Level 2 ranking (ladder 6, see 0x35d0)"
+    },
+    {
+      "address": "0x35d6",
+      "size": "u8",
+      "label": "Factory Trial ranking (ladder 7)"
+    },
+    {
+      "address": "0x35d7",
+      "size": "u8",
+      "label": "Factory Shadow ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35d8",
+      "size": "u8",
+      "label": "Castle Level 1 ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35d9",
+      "size": "u8",
+      "label": "Castle Level 2 ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35da",
+      "size": "u8",
+      "label": "Castle Level 3 ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35db",
+      "size": "u8",
+      "label": "Castle Level 4 ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x35dc",
+      "size": "u8",
+      "label": "Seargant Smash ranking (ladder 3, see 0x35bb)"
+    },
+    {
+      "address": "0x360c",
+      "size": "u8",
+      "label": "[Bitflags] Buttons pressed"
+    },
+    {
+      "address": "0x360d",
+      "size": "u8",
+      "label": "[Bitflags] Shoulder buttons pressed"
+    },
+    {
+      "address": "0x3668",
+      "size": "u8",
+      "label": "Option selection in menus"
+    },
+    {
+      "address": "0x366c",
+      "size": "u8",
+      "label": "Option Sound FX Off"
+    },
+    {
+      "address": "0x366d",
+      "size": "u8",
+      "label": "Option Music Off"
+    },
+    {
+      "address": "0x3670",
+      "size": "u8",
+      "label": "Language selected"
+    },
+    {
+      "address": "0x68b0",
+      "size": "u8",
+      "label": "Start of shop display text (ASCII)"
+    },
+    {
+      "address": "0x692b",
+      "size": "u8",
+      "label": "Amount of characters unlocked"
+    },
+    {
+      "address": "0x69e0",
+      "size": "u8",
+      "label": "Displayed time in pause dialog: Minutes (tens)"
+    },
+    {
+      "address": "0x69e1",
+      "size": "u8",
+      "label": "Displayed time in pause dialog: Minutes (ones)"
+    },
+    {
+      "address": "0x69e3",
+      "size": "u8",
+      "label": "Displayed time in pause dialog: Seconds (tens)"
+    },
+    {
+      "address": "0x69e4",
+      "size": "u8",
+      "label": "Displayed time in pause dialog: Seconds (ones)"
+    },
+    {
+      "address": "0x7e8c",
+      "size": "u8",
+      "label": "Character in Character Select screen"
+    },
+    {
+      "address": "0x7eb4",
+      "size": "u8",
+      "label": "(Mirror) Amount of characters available"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@cruncheevos/cli": "0.2.0",
+    "@cruncheevos/core": "0.2.0",
+    "dotenv": "17.4.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@stylistic/eslint-plugin": "5.10.0",
+    "eslint": "10.4.0",
+    "globals": "17.6.0"
+  }
+}

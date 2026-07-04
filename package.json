@@ -1,0 +1,25 @@
+{
+  "name": "rcheevos-js",
+  "version": "0.1.0",
+  "description": "JavaScript port of the rcheevos achievement trigger runtime, for testing RetroAchievements logic against recorded memory",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./testing": "./src/testing.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "test:scenarios": "vitest run",
+    "viewer": "node tools/viewer/serve.js",
+    "viewer:build": "node tools/viewer/build-static.js",
+    "export-achievements": "node tools/export-achievements.js",
+    "check-watchlist": "node tools/check-watchlist.js",
+    "refresh-labels": "node tools/refresh-scenario-labels.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.28.1",
+    "vitest": "^4.1.9"
+  }
+}
