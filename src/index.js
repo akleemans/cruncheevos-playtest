@@ -1,8 +1,11 @@
 /**
- * rcheevos-js: JavaScript port of the rcheevos achievement trigger runtime
- * (https://github.com/RetroAchievements/rcheevos, src/rcheevos, develop).
+ * cruncheevos-playtest public API: the rcheevos trigger engine port
+ * (https://github.com/RetroAchievements/rcheevos, src/rcheevos, develop)
+ * plus the Test Scenario format and code-notes tooling.
  *
- * See docs/how-achievements-work.md for how the pieces fit together.
+ * Node-only test helpers live in 'cruncheevos-playtest/testing'; the vitest
+ * bindings in 'cruncheevos-playtest/vitest'. See docs/how-achievements-work.md
+ * for the trigger model itself.
  */
 
 export { parseTrigger, Trigger, MEASURED_UNKNOWN, conditionSpans } from './engine/trigger.js';
@@ -16,4 +19,4 @@ export {
 } from './engine/harness.js';
 export { Scenario, parseRecording, serializeRecording } from './scenario-format.js';
 export { parseCodeNotes, codeNotesToWatchlist } from './code-notes.js';
-/* Node-only scenario loading + test runner: import from 'rcheevos-js/testing' */
+/* Node-only scenario loading + test runner: import from 'cruncheevos-playtest/testing' */

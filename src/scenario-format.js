@@ -1,7 +1,7 @@
 /**
  * Test Scenario format: parsing and frame expansion.
  *
- * A scenario is a folder recorded by lua-script/record_scenario.lua:
+ * A scenario is a folder recorded by record_scenario.lua (scaffolded by the CLI):
  *
  *   scenarios/<name>/
  *     recording.txt    frame-by-frame memory changes (sparse line format)

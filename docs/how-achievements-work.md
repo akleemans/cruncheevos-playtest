@@ -178,11 +178,11 @@ exact string rcheevos parses — and what `parseTrigger()` in this repo
 accepts. The harness helper `achievementToTriggerDefinition()` does this for
 you.
 
-## Testing achievements with rcheevos-js
+## Testing achievements with cruncheevos-playtest
 
 ```js
-import { runTrigger } from 'rcheevos-js';
-import set from './cruncheevos-scripts-main/monster-force.js';
+import { runTrigger } from 'cruncheevos-playtest';
+import set from './my-game/my-game.js';
 
 const achievement = Object.values(set.achievements)
   .find(a => a.title === 'Welcome to Monsterland');
@@ -191,6 +191,6 @@ const achievement = Object.values(set.achievements)
 const { triggeredFrame, states } = runTrigger(achievement, frames);
 ```
 
-See the top-level README for the harness API and recording formats, and
-`test/harness.test.js` for complete examples (including verifying that a
-cheat-protection PauseIf keeps an achievement locked).
+That's the low-level path; in practice you'll record Test Scenarios in
+BizHawk and use `runAchievement()`/`scenarioIt()` from the testing helpers —
+see the package README for the full workflow.
