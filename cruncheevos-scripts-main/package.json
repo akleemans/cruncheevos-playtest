@@ -9,6 +9,13 @@
     "@eslint/js": "10.0.1",
     "@stylistic/eslint-plugin": "5.10.0",
     "eslint": "10.4.0",
-    "globals": "17.6.0"
+    "globals": "17.6.0",
+    "cruncheevos-playtest": "file:..",
+    "vitest": "^4.1.9"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "viewer": "cruncheevos-playtest viewer",
+    "watchlist": "cruncheevos-playtest watchlist monster-force"
   }
 }
