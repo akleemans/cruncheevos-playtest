@@ -34,7 +34,7 @@ Usage:
                                              labels stored in scenarios
       --check                                verify coverage only, write nothing
 
-Docs: the package README and how-achievements-work.md.
+Docs: the package README, and achievement-trigger-model.md in the repo.
 `;
 
 function fail(message) {

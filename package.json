@@ -25,8 +25,7 @@
     "viewer",
     "scaffold",
     "README.md",
-    "LICENSE",
-    "how-achievements-work.md"
+    "LICENSE"
   ],
   "scripts": {
     "test": "node --test test/*.test.js",

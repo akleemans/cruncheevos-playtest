@@ -97,7 +97,7 @@ Run the above, then open `http://localhost:8123` to open the viewer.
 
 ![scenario-viewer](https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/scenario-viewer.png)
 
-Step through frames (←/→, shift=±10, ctrl=±60, space=play) and the screenshots & watched addresses will change
+Step through frames with left/right (shift=10 frames, ctrl=60 frames, space=play) and the screenshots & watched addresses will change
 according to the recording.
 
 There are per-condition truth dots and hit counts for every frame, which help indicate when a condition is true.
@@ -174,7 +174,7 @@ import {loadScenario, runAchievement, hasScenario} from 'cruncheevos-playtest/te
 The low-level engine works without scenarios or cruncheevos — feed
 `parseTrigger('0xH0001=16S...')` any trigger string and drive it with a
 `peek(address, numBytes)` function or per-frame byte maps. See
-[how-achievements-work.md](how-achievements-work.md) for the
+[achievement-trigger-model.md](achievement-trigger-model.md) for the
 trigger model itself (groups, flags, hit counts, Delta/Prior).
 
 ## Achievement trigger evaluation
