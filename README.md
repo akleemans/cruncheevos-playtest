@@ -10,16 +10,16 @@ Features:
 * JS API for writing tests & validation (based on rcheevos trigger runtime):
 
 ```js
-describe('Finish first level', () => {
-    playtest('pops exactly when the next level is unlocked at the save screen',
-        scenario('level1-finish-regular', 'save-screen'), (s) => {
-            expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('save-screen'));
-        });
+describe('Finish the first level', () => {
+    test('pops exactly when the next level is unlocked at the save screen', () => {
+        const s = scenario('level1-finish-regular');
+        expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('save-screen'));
+    });
 
-    playtest('does not pop when the level is finished via the skip-level cheat',
-        scenario('level1-cheat-level-skip'), (s) => {
-            expect(runAchievement(cheevo, s).triggered).toBe(false);
-        });
+    test('does not pop when the level is finished via the skip-level cheat', () => {
+        const s = scenario('level1-cheat-level-skip');
+        expect(runAchievement(cheevo, s).triggered).toBe(false);
+    });
 });
 ```
 
@@ -58,6 +58,7 @@ to record.
 
 To record a test scenario, edit `recorder-config.lua` to add a `name` (and change `console` if needed), then open
 BizHawk and choose Tools > Lua Console, and open `record-scenario.lua`.
+
 **Important**: Make sure `recorder-config.lua` (scenario config), `record-scenario.lua` (recorder script) and
 `watchlist.lua` (which addresses to watch, generated from your Code notes) are all in the same place.
 
@@ -75,7 +76,7 @@ Screenshots are also recorded, but only used for visual debugging, not for the a
 Output example (saved as `recording.txt`, in the scenario folder):
 
 ```csv
-frame,0x0770:u8,0x0778:u8,0x077c:u80x359c:u16,0x360c:u8
+frame,0x0770:u8,0x0778:u8,0x077c:u8,0x359c:u16,0x360c:u8
 9311,0x0770=15,0x0778=1,0x077c=2,0x360c=0
 9312,0x359c=4489
 9313,0x359c=4490
@@ -111,36 +112,37 @@ the player used a cheat.
 
 ```js
 // monster-force/tests/progression.test.js
-import {describe, expect} from 'vitest';
-import {playtest, requireScenario, runAchievement} from 'cruncheevos-playtest/vitest';
+import {describe, test, expect} from 'vitest';
+import {loadScenario, runAchievement} from 'cruncheevos-playtest/testing';
 import set from '../monster-force.js';
 
 const getAchievement = (title) => Object.values(set.achievements).find((a) => a.title === title);
-const scenario = (name, ...markers) => requireScenario(new URL(`../scenarios/${name}`, import.meta.url), ...markers);
+const scenario = (name) => loadScenario(new URL(`../scenarios/${name}`, import.meta.url));
 
 describe('Level 1 progression achievement', () => {
     const cheevo = getAchievement('Welcome to Monsterland');
 
-    playtest('pops when the next level is unlocked',
-        scenario('level1-finish', 'save-screen'), (scenario) => {
-            const result = runAchievement(cheevo, scenario);
+    test('pops when the next level is unlocked', () => {
+        const s = scenario('level1-finish');
+        const result = runAchievement(cheevo, s);
 
-            expect(result.triggered).toBe(true);
-            expect(result.triggeredFrame).toBe(scenario.marker('save-screen'));
-        });
+        expect(result.triggered).toBe(true);
+        expect(result.triggeredFrame).toBe(s.marker('save-screen'));
+    });
 
-    playtest('locks when invincibility cheat is enabled and doesnt pop achievement',
-        scenario('level1-finish-cheat-invincibility', 'cheat-on'), (scenario) => {
-            const result = runAchievement(cheevo, scenario);
+    test('locks with pause when invincibility cheat is enabled and doesnt pop achievement', () => {
+        const s = scenario('level1-finish-cheat-invincibility');
+        const result = runAchievement(cheevo, s);
 
-            expect(result.triggered).toBe(false);
-            expect(result.stateAt(scenario.marker('cheat-on'))).toBe('paused');
-        });
+        expect(result.triggered).toBe(false);
+        expect(result.stateAt(s.marker('cheat-on'))).toBe('paused');
+    });
 });
 ```
 
-The structure follows vitest: A `describe` block should read what we're looking at, followed by a `playtest` description
-with a `scenario` and expectations.
+The test setup and assertions are plain [vitest](https://vitest.dev/api/describe.html#describe).
+Scenarios can be loaded with the `loadScenario` helper, and `runAchievement` will run an achievement through a scenario
+so the outcome can be checked against an expection.
 
 (Like a real emulator, triggers start in the `waiting` state and cannot pop on a recording's first frame.)
 
@@ -159,7 +161,6 @@ Scenarios offer:
 * `valueAt(frame, address)`
 * `slice(fromFrame, toFrame)`
 
-
 ## JS API
 
 ```js
@@ -167,7 +168,7 @@ import {
     parseTrigger, runTrigger, TriggerRunner, Scenario,
     parseRecording, bytesFromValues
 } from 'cruncheevos-playtest';
-import {loadScenario, runAchievement, requireScenario} from 'cruncheevos-playtest/testing';
+import {loadScenario, runAchievement, hasScenario} from 'cruncheevos-playtest/testing';
 ```
 
 The low-level engine works without scenarios or cruncheevos — feed
@@ -180,7 +181,7 @@ trigger model itself (groups, flags, hit counts, Delta/Prior).
 
 The bundled engine is a port of the evaluation core
 of [rcheevos](https://github.com/RetroAchievements/rcheevos/tree/develop/src/rcheevos)
-(develop branch at 2026-06-04), ported to JavaScript by Claude Fable.
+(develop branch at 2026-07-04), ported to JavaScript by Claude Fable.
 
 The unit test suite from rcheevos and a differential fuzzer (`tools/difftest/`) were used to compare
 inputs/outputs per-frame state, measured value and every hit count against the compiled C library on

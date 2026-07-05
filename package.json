@@ -16,8 +16,7 @@
   },
   "exports": {
     ".": "./src/index.js",
-    "./testing": "./src/testing.js",
-    "./vitest": "./src/vitest.js"
+    "./testing": "./src/testing.js"
   },
   "files": [
     "bin",
@@ -34,9 +33,6 @@
     "viewer": "node bin/cli.js viewer"
   },
   "license": "MIT",
-  "devDependencies": {
-    "vitest": "^4.1.9"
-  },
   "engines": {
     "node": ">=18"
   },

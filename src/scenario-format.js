@@ -149,7 +149,8 @@ export class Scenario {
   marker(name) {
     const frame = this.markers[name];
     if (frame === undefined)
-      throw new Error(`scenario "${this.name}" has no marker "${name}" (has: ${Object.keys(this.markers).join(', ') || 'none'})`);
+      throw new Error(`scenario "${this.name}" has no marker "${name}" ` +
+        `(has: ${Object.keys(this.markers).join(', ') || 'none'}) - set it in the Scenario Viewer`);
     return frame;
   }
 

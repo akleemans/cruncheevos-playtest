@@ -40,23 +40,14 @@ export function loadScenario(dir) {
 }
 
 /**
- * Load a scenario for a test; returns { scenario, missing } where `missing`
- * explains why the test cannot run yet (folder or markers absent). Pair with
- * playtest() from 'cruncheevos-playtest/vitest' so unrecorded scenarios
- * skip with instructions instead of failing.
+ * True if a scenario folder exists (contains a recording.txt). Handy for
+ * committing tests ahead of their recordings with vitest's standard
+ * conditional skip:
+ *
+ *   test.skipIf(!hasScenario(dir))('pops at the boss kill', () => { ... });
  */
-export function requireScenario(dir, ...markers) {
-  dir = asPath(dir);
-  const name = dir.split('/').filter(Boolean).pop();
-  if (!existsSync(join(dir, 'recording.txt')))
-    return { scenario: null, missing: `scenario "${name}" not recorded yet` };
-
-  const scenario = loadScenario(dir);
-  const absent = markers.filter((m) => scenario.markers[m] === undefined);
-  if (absent.length)
-    return { scenario, missing: `set marker(s) [${absent.join(', ')}] on "${name}" in the viewer` };
-
-  return { scenario, missing: null };
+export function hasScenario(dir) {
+  return existsSync(join(asPath(dir), 'recording.txt'));
 }
 
 /**

@@ -192,5 +192,5 @@ const { triggeredFrame, states } = runTrigger(achievement, frames);
 ```
 
 That's the low-level path; in practice you'll record Test Scenarios in
-BizHawk and use `runAchievement()`/`scenarioIt()` from the testing helpers —
+BizHawk and use `runAchievement()` from the testing helpers —
 see the package README for the full workflow.
