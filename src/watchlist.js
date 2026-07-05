@@ -2,7 +2,7 @@
  * Watchlist workflow: generate the BizHawk watchlist from code notes, verify
  * it covers every address the achievements read, and refresh the labels
  * stored in existing scenarios. One conceptual action - "my notes changed" -
- * exposed as `cruncheevos-playtest watchlist <gameDir>`.
+ * exposed as `cruncheevos-playtest sync <gameDir>`.
  *
  * Node-only.
  */

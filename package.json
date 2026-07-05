@@ -39,5 +39,14 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akleemans/cruncheevos-playtest.git"
+  },
+  "homepage": "https://github.com/akleemans/cruncheevos-playtest#readme",
+  "bugs": {
+    "url": "https://github.com/akleemans/cruncheevos-playtest/issues"
+  },
+  "author": "Adrianus Kleemans"
 }

@@ -42,7 +42,7 @@ export function loadScenario(dir) {
 /**
  * Load a scenario for a test; returns { scenario, missing } where `missing`
  * explains why the test cannot run yet (folder or markers absent). Pair with
- * scenarioIt() from 'cruncheevos-playtest/vitest' so unrecorded scenarios
+ * playtest() from 'cruncheevos-playtest/vitest' so unrecorded scenarios
  * skip with instructions instead of failing.
  */
 export function requireScenario(dir, ...markers) {

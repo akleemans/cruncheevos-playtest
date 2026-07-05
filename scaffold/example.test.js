@@ -2,7 +2,7 @@
  * Scenario tests: one `describe` per achievement, one `it` per recorded
  * Test Scenario with the expected outcome.
  *
- * scenarioIt() skips (with a reason) until the scenario folder exists and
+ * playtest() skips (with a reason) until the scenario folder exists and
  * has the markers the test needs - record with record_scenario.lua, then
  * set markers in the Scenario Viewer (npx cruncheevos-playtest viewer)
  * while stepping through the frames.
@@ -11,7 +11,7 @@
  */
 
 import { describe, expect } from 'vitest';
-import { scenarioIt, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
+import { playtest, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
 import set from '../my-game.js'; // <- your cruncheevos AchievementSet
 
 const achievement = (title) => {
@@ -27,14 +27,14 @@ const scenario = (name, ...markers) =>
 describe('My First Achievement', () => {
   const cheevo = achievement('My First Achievement');
 
-  scenarioIt('pops exactly on the expected frame',
+  playtest('pops exactly on the expected frame',
     scenario('my-first-scenario', 'the-moment'),
     (s) => {
       const result = runAchievement(cheevo, s);
       expect(result.triggeredFrame).toBe(s.marker('the-moment'));
     });
 
-  scenarioIt('does not pop when playing with a cheat',
+  playtest('does not pop when playing with a cheat',
     scenario('my-cheat-scenario'),
     (s) => {
       const result = runAchievement(cheevo, s);

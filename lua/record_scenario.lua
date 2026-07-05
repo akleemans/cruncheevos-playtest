@@ -8,7 +8,7 @@
 -- Usage:
 --   1. edit recorder-config.lua next to this script (scenario name, console)
 --   2. generate watchlist.lua from your code notes (required):
---        npx cruncheevos-playtest watchlist <gameDir>
+--        npx cruncheevos-playtest sync <gameDir>
 --   3. load this script in BizHawk's Lua Console, play the scenario,
 --      then stop the script - the final frame is flushed on exit
 --
@@ -81,7 +81,7 @@ for _, path in ipairs({ scriptDir .. WATCHLIST_FILE, WATCHLIST_FILE }) do
 end
 if not WATCH then
     error("\n" .. WATCHLIST_FILE .. " not found next to record_scenario.lua (or it is empty).\n" ..
-          "Generate it from your code notes:  npx cruncheevos-playtest watchlist <gameDir>")
+          "Generate it from your code notes:  npx cruncheevos-playtest sync <gameDir>")
 end
 
 -- translate an RA address to a BizHawk {domain, offset} pair

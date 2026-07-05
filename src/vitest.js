@@ -3,13 +3,13 @@
  * files (vitest must be installed in the consuming project):
  *
  *   import { describe, expect } from 'vitest';
- *   import { scenarioIt, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
+ *   import { playtest, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
  *
  *   const scenario = (name, ...markers) =>
  *     requireScenario(new URL(`../scenarios/${name}`, import.meta.url), ...markers);
  *
  *   describe('My Achievement', () => {
- *     scenarioIt('pops at the boss kill', scenario('boss-kill', 'boss-dead'), (s) => {
+ *     playtest('pops at the boss kill', scenario('boss-kill', 'boss-dead'), (s) => {
  *       expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('boss-dead'));
  *     });
  *   });
@@ -23,7 +23,7 @@ export { requireScenario, loadScenario, runAchievement, ScenarioResult } from '.
  * it() that skips itself with a reason while the scenario is incomplete
  * (not recorded yet, or missing the markers the test needs).
  */
-export function scenarioIt(title, req, fn) {
+export function playtest(title, req, fn) {
   if (req.missing) {
     it.skip(`${title} — SKIPPED: ${req.missing}`, () => {});
   } else {

@@ -5,7 +5,7 @@
  *
  *   cruncheevos-playtest init <gameDir>       scaffold a game folder
  *   cruncheevos-playtest viewer [--port N]    Scenario Viewer for this repo
- *   cruncheevos-playtest watchlist <gameDir> [--check]
+ *   cruncheevos-playtest sync <gameDir> [--check]
  *       regenerate <gameDir>/watchlist.lua from the code notes, verify it
  *       covers every address the game's achievements read, and refresh the
  *       labels stored in existing scenarios (--check: verify only)
@@ -27,12 +27,14 @@ Usage:
                                              config, scenarios/, tests/)
   cruncheevos-playtest viewer [--port N]     open the Scenario Viewer for the
                                              current repo (default port 8123)
-  cruncheevos-playtest watchlist <gameDir>   regenerate watchlist.lua from the
-                                             game's code notes, verify coverage,
-                                             refresh scenario labels
+  cruncheevos-playtest sync <gameDir>        sync everything derived from the
+                                             game's code notes: regenerate
+                                             watchlist.lua, verify it covers all
+                                             achievement addresses, refresh the
+                                             labels stored in scenarios
       --check                                verify coverage only, write nothing
 
-Docs: node_modules/cruncheevos-playtest/docs/ and the package README.
+Docs: the package README and how-achievements-work.md.
 `;
 
 function fail(message) {
@@ -69,7 +71,7 @@ Next steps:
   1. put your achievement set (.js) and code notes export
      (<gameid>-Notes.json, from RAIntegration's RACache/Data) into ${gameDir}/
   2. edit ${gameDir}/recorder-config.lua (game name, console)
-  3. cruncheevos-playtest watchlist ${gameDir}
+  3. cruncheevos-playtest sync ${gameDir}
   4. record: load ${gameDir}/record_scenario.lua in BizHawk's Lua Console
   5. cruncheevos-playtest viewer  ->  set markers on your recordings
   6. write tests in ${gameDir}/tests/ (see example.test.js), run with vitest
@@ -87,9 +89,9 @@ async function viewer() {
 
 /* ------------------------------------------------------------------ */
 
-async function watchlist() {
+async function sync() {
   const gameDir = positional[0];
-  if (!gameDir) fail('usage: cruncheevos-playtest watchlist <gameDir> [--check]');
+  if (!gameDir) fail('usage: cruncheevos-playtest sync <gameDir> [--check]');
   if (!existsSync(gameDir)) fail(`no such directory: ${gameDir}`);
 
   const { findNotesFile, watchlistLua, findUncoveredAddresses, refreshScenarioLabels,
@@ -146,7 +148,7 @@ async function watchlist() {
 switch (command) {
   case 'init': await init(); break;
   case 'viewer': await viewer(); break;
-  case 'watchlist': await watchlist(); break;
+  case 'sync': await sync(); break;
   default:
     console.log(HELP);
     process.exit(command === undefined || command === 'help' ? 0 : 1);

@@ -6,15 +6,19 @@ replay them against your [cruncheevos](https://github.com/suXinjke/cruncheevos)
 achievement logic in ordinary vitest tests, and step through every frame in
 a visual inspector when something doesn't pop where it should.
 
+<!-- TODO(akleemans): hero screenshot of the Scenario Viewer - e.g. the crystal-run
+     recording with the achievement loaded at the pop frame (TRIGGERED badge, green
+     condition dots, state timeline). Sells the tool better than any paragraph. -->
+
 ```js
 describe('Welcome to Monsterland', () => {
-  scenarioIt('pops exactly when the next level is unlocked at the save screen',
+  playtest('pops exactly when the next level is unlocked at the save screen',
     scenario('cemetery1-finish-ranking-crystal', 'save-screen'),
     (s) => {
       expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('save-screen'));
     });
 
-  scenarioIt('does not pop when the level is finished via the skip-level cheat',
+  playtest('does not pop when the level is finished via the skip-level cheat',
     scenario('cemetery1-finish-cheat-level-skip'),
     (s) => {
       expect(runAchievement(cheevo, s).triggered).toBe(false);
@@ -52,19 +56,24 @@ my-game/
 Adding another game = adding another folder. All tooling discovers content
 by scanning, so other layouts work too.
 
-### 1. Generate the watchlist
+### 1. Sync from your code notes
 
 ```sh
-npx cruncheevos-playtest watchlist my-game
+npx cruncheevos-playtest sync my-game
 ```
 
-Reads the game's code notes (sizes from the `[8-bit]`/`[16-bit]`/`[32-bit]`
-tags), writes `watchlist.lua`, **verifies it covers every address your
-achievements actually read** (fails loudly if notes are missing — add notes,
-re-export, rerun), and refreshes the labels stored in existing scenarios.
-Code notes are the single source of truth for what gets recorded.
+Code notes are the single source of truth for what gets recorded; `sync`
+makes everything derived from them current: it reads the game's notes (sizes
+from the `[8-bit]`/`[16-bit]`/`[32-bit]` tags), writes `watchlist.lua`,
+**verifies it covers every address your achievements actually read** (fails
+loudly if notes are missing — add notes, re-export, rerun), and refreshes
+the labels stored in existing scenarios. Rerun it whenever your notes
+change; `--check` verifies without writing (handy in CI).
 
 ### 2. Record a Test Scenario (BizHawk)
+
+<!-- TODO(akleemans): screenshot of BizHawk with the Lua Console running
+     record_scenario.lua (the first-reads sanity output visible) -->
 
 Edit `recorder-config.lua` (scenario `name`, `console`), load
 `record_scenario.lua` in BizHawk's Lua Console, play, stop the script.
@@ -88,6 +97,9 @@ Two things worth knowing:
 npx cruncheevos-playtest viewer     # -> http://localhost:8123
 ```
 
+<!-- TODO(akleemans): viewer screenshot (or crop of the hero shot): frame stepper,
+     memory table with labels, per-condition panel -->
+
 Step through frames (←/→, shift=±10, ctrl=±60, space=play) with screenshots,
 all watched addresses (labels from your code notes, change highlighting),
 and — after picking an achievement — a color-coded state timeline plus
@@ -104,14 +116,14 @@ your tests use — no magic numbers.
 ```js
 // my-game/tests/progression.test.js
 import { describe, expect } from 'vitest';
-import { scenarioIt, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
+import { playtest, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
 import set from '../my-game.js';
 
 const scenario = (name, ...markers) =>
   requireScenario(new URL(`../scenarios/${name}`, import.meta.url), ...markers);
 ```
 
-`scenarioIt` skips (with instructions) until the scenario is recorded and
+`playtest` is vitest's `it` with a guard: it skips (with instructions) until the scenario is recorded and
 has the markers the test needs — write the tests first if you like.
 Like a real emulator, triggers start in the `waiting` state and cannot pop
 on a recording's first frame.
@@ -159,7 +171,7 @@ Not ported: leaderboards, rich presence, the runtime/http client layers.
 ```
 src/engine/       the rcheevos port (browser-safe, dependency-free)
 src/              scenario format, discovery, watchlist, test helpers
-bin/cli.js        init | viewer | watchlist
+bin/cli.js        init | viewer | sync
 lua/              BizHawk recorder template
 scaffold/         files copied into game folders by `init`
 viewer/           Scenario Viewer (assets + server)
