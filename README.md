@@ -142,7 +142,7 @@ describe('Level 1 progression achievement', () => {
 
 The test setup and assertions are plain [vitest](https://vitest.dev/api/describe.html#describe).
 Scenarios can be loaded with the `loadScenario` helper, and `runAchievement` will run an achievement through a scenario
-so the outcome can be checked against an expection.
+so the outcome can be checked against an expectation.
 
 (Like a real emulator, triggers start in the `waiting` state and cannot pop on a recording's first frame.)
 
