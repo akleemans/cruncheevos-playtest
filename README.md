@@ -8,7 +8,10 @@ a visual inspector when something doesn't pop where it should.
 
 <!-- TODO(akleemans): hero screenshot of the Scenario Viewer - e.g. the crystal-run
      recording with the achievement loaded at the pop frame (TRIGGERED badge, green
-     condition dots, state timeline). Sells the tool better than any paragraph. -->
+     condition dots, state timeline). Sells the tool better than any paragraph.
+     For the image to show on npmjs.com too, commit it to the repo (e.g. assets/)
+     and use an absolute URL:
+     https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/viewer.png -->
 
 ```js
 describe('Welcome to Monsterland', () => {
@@ -47,7 +50,7 @@ my-game/
 ├── my-game.js             your cruncheevos AchievementSet
 ├── <gameid>-Notes.json    code notes export (RAIntegration: RACache/Data)
 ├── recorder-config.lua    per-session recorder settings (name, console, ...)
-├── record_scenario.lua    BizHawk recorder (don't edit; updated by init)
+├── record-scenario.lua    BizHawk recorder (don't edit; updated by init)
 ├── watchlist.lua          generated - what the recorder captures
 ├── scenarios/             recordings land here
 └── tests/                 vitest scenario tests
@@ -73,10 +76,10 @@ change; `--check` verifies without writing (handy in CI).
 ### 2. Record a Test Scenario (BizHawk)
 
 <!-- TODO(akleemans): screenshot of BizHawk with the Lua Console running
-     record_scenario.lua (the first-reads sanity output visible) -->
+     record-scenario.lua (the first-reads sanity output visible) -->
 
 Edit `recorder-config.lua` (scenario `name`, `console`), load
-`record_scenario.lua` in BizHawk's Lua Console, play, stop the script.
+`record-scenario.lua` in BizHawk's Lua Console, play, stop the script.
 
 Two things worth knowing:
 

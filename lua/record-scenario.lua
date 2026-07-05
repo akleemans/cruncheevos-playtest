@@ -1,4 +1,4 @@
--- record_scenario.lua - BizHawk Test Scenario recorder (cruncheevos-playtest)
+-- record-scenario.lua - BizHawk Test Scenario recorder (cruncheevos-playtest)
 --
 -- Records watched memory addresses to <out_root>/<name>/recording.txt and
 -- captures screenshots, in the format understood by cruncheevos-playtest
@@ -30,7 +30,7 @@ local scriptDir = (debug.getinfo(1, "S").source:match("@?(.*[/\\])")) or ""
 
 local cfgOk, CFG = pcall(dofile, scriptDir .. "recorder-config.lua")
 if not cfgOk or type(CFG) ~= "table" then
-    error("\nrecorder-config.lua not found next to record_scenario.lua.\n" ..
+    error("\nrecorder-config.lua not found next to record-scenario.lua.\n" ..
           "Scaffold it with: npx cruncheevos-playtest init <gameDir>")
 end
 if not CFG.name or CFG.name == "" then
@@ -80,7 +80,7 @@ for _, path in ipairs({ scriptDir .. WATCHLIST_FILE, WATCHLIST_FILE }) do
     end
 end
 if not WATCH then
-    error("\n" .. WATCHLIST_FILE .. " not found next to record_scenario.lua (or it is empty).\n" ..
+    error("\n" .. WATCHLIST_FILE .. " not found next to record-scenario.lua (or it is empty).\n" ..
           "Generate it from your code notes:  npx cruncheevos-playtest sync <gameDir>")
 end
 

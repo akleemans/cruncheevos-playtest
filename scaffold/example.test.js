@@ -3,7 +3,7 @@
  * Test Scenario with the expected outcome.
  *
  * playtest() skips (with a reason) until the scenario folder exists and
- * has the markers the test needs - record with record_scenario.lua, then
+ * has the markers the test needs - record with record-scenario.lua, then
  * set markers in the Scenario Viewer (npx cruncheevos-playtest viewer)
  * while stepping through the frames.
  *

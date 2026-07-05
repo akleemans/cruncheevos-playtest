@@ -1,4 +1,4 @@
--- Per-recording settings for record_scenario.lua. Edit `name` (and usually
+-- Per-recording settings for record-scenario.lua. Edit `name` (and usually
 -- `description`) before each recording session; the rest is per-game.
 return {
     -- this recording session

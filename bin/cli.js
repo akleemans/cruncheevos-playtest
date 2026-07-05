@@ -52,7 +52,7 @@ async function init() {
   mkdirSync(join(gameDir, 'tests'), { recursive: true });
 
   const scaffold = [
-    [join(packageDir, 'lua', 'record_scenario.lua'), join(gameDir, 'record_scenario.lua')],
+    [join(packageDir, 'lua', 'record-scenario.lua'), join(gameDir, 'record-scenario.lua')],
     [join(packageDir, 'scaffold', 'recorder-config.lua'), join(gameDir, 'recorder-config.lua')],
     [join(packageDir, 'scaffold', 'example.test.js'), join(gameDir, 'tests', 'example.test.js')],
   ];
@@ -72,7 +72,7 @@ Next steps:
      (<gameid>-Notes.json, from RAIntegration's RACache/Data) into ${gameDir}/
   2. edit ${gameDir}/recorder-config.lua (game name, console)
   3. cruncheevos-playtest sync ${gameDir}
-  4. record: load ${gameDir}/record_scenario.lua in BizHawk's Lua Console
+  4. record: load ${gameDir}/record-scenario.lua in BizHawk's Lua Console
   5. cruncheevos-playtest viewer  ->  set markers on your recordings
   6. write tests in ${gameDir}/tests/ (see example.test.js), run with vitest
 `);
@@ -114,7 +114,7 @@ async function sync() {
 
   /* 2. coverage check against the game's achievement set */
   const setFile = readdirSync(gameDir).find((f) => f.endsWith('.js') &&
-    !/(\.test\.|\.config\.|^eslint|^vitest)/.test(f) && f !== 'record_scenario.lua');
+    !/(\.test\.|\.config\.|^eslint|^vitest)/.test(f) && f !== 'record-scenario.lua');
   if (!setFile) {
     console.log('no achievement set (.js) in the game folder - skipping the coverage check');
   } else {
