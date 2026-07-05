@@ -4,7 +4,7 @@
  * plus the Test Scenario format and code-notes tooling.
  *
  * Node-only test helpers live in 'cruncheevos-playtest/testing'; the vitest
- * bindings in 'cruncheevos-playtest/vitest'. See docs/how-achievements-work.md
+ * bindings in 'cruncheevos-playtest/vitest'. See how-achievements-work.md
  * for the trigger model itself.
  */
 

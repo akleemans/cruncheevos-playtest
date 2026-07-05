@@ -132,7 +132,7 @@ import { loadScenario, runAchievement, requireScenario } from 'cruncheevos-playt
 The low-level engine works without scenarios or cruncheevos — feed
 `parseTrigger('0xH0001=16S...')` any trigger string and drive it with a
 `peek(address, numBytes)` function or per-frame byte maps. See
-[docs/how-achievements-work.md](docs/how-achievements-work.md) for the
+[how-achievements-work.md](how-achievements-work.md) for the
 trigger model itself (groups, flags, hit counts, Delta/Prior).
 
 ## Fidelity

@@ -25,9 +25,9 @@
     "lua",
     "viewer",
     "scaffold",
-    "docs",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "how-achievements-work.md"
   ],
   "scripts": {
     "test": "node --test test/*.test.js",
@@ -36,5 +36,8 @@
   "license": "MIT",
   "devDependencies": {
     "vitest": "^4.1.9"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
