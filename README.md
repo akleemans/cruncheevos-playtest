@@ -1,147 +1,173 @@
 # cruncheevos-playtest
 
-Playtest [RetroAchievements](https://retroachievements.org) achievements
-before anyone plays them: record emulator memory as **Test Scenarios**,
-replay them against your [cruncheevos](https://github.com/suXinjke/cruncheevos)
-achievement logic in ordinary vitest tests, and step through every frame in
-a visual inspector when something doesn't pop where it should.
+**Test framework** for [cruncheevos](https://github.com/suXinjke/cruncheevos) - record emulator memory as
+**test scenarios** and write test for your achievements to check when exactly they should pop (or not)!
 
-<!-- TODO(akleemans): hero screenshot of the Scenario Viewer - e.g. the crystal-run
-     recording with the achievement loaded at the pop frame (TRIGGERED badge, green
-     condition dots, state timeline). Sells the tool better than any paragraph.
-     For the image to show on npmjs.com too, commit it to the repo (e.g. assets/)
-     and use an absolute URL:
-     https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/viewer.png -->
+Features:
+
+* Lua scripts for recording test scenarios (relevant memory + screenshots) in BizHawk
+* Test scenario viewer to walk through scenarios and set marker frames (anchors for writing tests)
+* JS API for writing tests & validation (based on rcheevos trigger runtime):
 
 ```js
-describe('Welcome to Monsterland', () => {
-  playtest('pops exactly when the next level is unlocked at the save screen',
-    scenario('cemetery1-finish-ranking-crystal', 'save-screen'),
-    (s) => {
-      expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('save-screen'));
-    });
+describe('Finish first level', () => {
+    playtest('pops exactly when the next level is unlocked at the save screen',
+        scenario('level1-finish-regular', 'save-screen'), (s) => {
+            expect(runAchievement(cheevo, s).triggeredFrame).toBe(s.marker('save-screen'));
+        });
 
-  playtest('does not pop when the level is finished via the skip-level cheat',
-    scenario('cemetery1-finish-cheat-level-skip'),
-    (s) => {
-      expect(runAchievement(cheevo, s).triggered).toBe(false);
-    });
+    playtest('does not pop when the level is finished via the skip-level cheat',
+        scenario('level1-cheat-level-skip'), (s) => {
+            expect(runAchievement(cheevo, s).triggered).toBe(false);
+        });
 });
 ```
 
-Under the hood is a faithful JavaScript port of the
-[rcheevos](https://github.com/RetroAchievements/rcheevos) trigger runtime —
-the same evaluation engine emulators use — so your achievements behave in
-tests exactly as they will on players' machines (see [Fidelity](#fidelity)).
-
 ## Getting started
 
-In your cruncheevos achievement-scripts repo:
+In your personal cruncheevos scripts repo:
 
 ```sh
 npm install --save-dev cruncheevos-playtest vitest
 npx cruncheevos-playtest init my-game
 ```
 
-This scaffolds a game folder — the recommended (not required) layout:
+This scaffolds a game folder with a recommended layout:
 
 ```
 my-game/
-├── my-game.js             your cruncheevos AchievementSet
-├── <gameid>-Notes.json    code notes export (RAIntegration: RACache/Data)
+├── my-game.js             your cruncheevos achievements
+├── <gameid>-Notes.json    code notes export (from RAIntegration)
 ├── recorder-config.lua    per-session recorder settings (name, console, ...)
-├── record-scenario.lua    BizHawk recorder (don't edit; updated by init)
+├── record-scenario.lua    BizHawk recorder (don't edit - updated by init)
 ├── watchlist.lua          generated - what the recorder captures
-├── scenarios/             recordings land here
+├── scenarios/             recordings
 └── tests/                 vitest scenario tests
 ```
 
-Adding another game = adding another folder. All tooling discovers content
-by scanning, so other layouts work too.
-
-### 1. Sync from your code notes
+### 1. Add & sync code notes
 
 ```sh
 npx cruncheevos-playtest sync my-game
 ```
 
-Code notes are the single source of truth for what gets recorded; `sync`
-makes everything derived from them current: it reads the game's notes (sizes
-from the `[8-bit]`/`[16-bit]`/`[32-bit]` tags), writes `watchlist.lua`,
-**verifies it covers every address your achievements actually read** (fails
-loudly if notes are missing — add notes, re-export, rerun), and refreshes
-the labels stored in existing scenarios. Rerun it whenever your notes
-change; `--check` verifies without writing (handy in CI).
+After adding `<gameid>-Notes.json`, run `sync` to generate the `watchlist.lua`, so the BizHawk/Lua knows what addresses
+to record.
 
-### 2. Record a Test Scenario (BizHawk)
+### 2. Record a Test Scenario with BizHawk
 
-<!-- TODO(akleemans): screenshot of BizHawk with the Lua Console running
-     record-scenario.lua (the first-reads sanity output visible) -->
+To record a test scenario, edit `recorder-config.lua` to add a `name` (and change `console` if needed), then open
+BizHawk and choose Tools > Lua Console, and open `record-scenario.lua`.
+**Important**: Make sure `recorder-config.lua` (scenario config), `record-scenario.lua` (recorder script) and
+`watchlist.lua` (which addresses to watch, generated from your Code notes) are all in the same place.
 
-Edit `recorder-config.lua` (scenario `name`, `console`), load
-`record-scenario.lua` in BizHawk's Lua Console, play, stop the script.
+Get to the point where you want to start the recording (play through the game, or load a save state), then choose "
+Toggle Script" to start, which can take some seconds to initialize.
+Play through a relevant part of the game, then stop the script.
 
-Two things worth knowing:
+![bizhawk-recording](https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/bizhawk-recording.jpg)
 
-- **RA addresses are not System Bus addresses.** They follow the RA memory
-  map; on GBA, `0x0000-0x7FFF` is IWRAM and `0x8000+` is EWRAM. The recorder
-  translates automatically based on `console`, and prints its first reads on
-  start — sanity-check them against the RAM watch before playing.
-- Recordings are sparse and cheap (~10 kB/minute): a row is written only
-  when a watched value changes, and held values expand back to the exact
-  per-frame sequence — which Delta operands and hit counting require.
-  Record generously: play past the interesting moment, capture menus,
-  save screens, cheats being toggled. Scenarios are reusable evidence, and
-  today's irrelevant address is tomorrow's regression test.
+Recordings are sparse and cheap (~10 kB/minute): A new row is written only when a watched value changes.
+It is better to record generously (with a bit of margin before and after), so the scenarios can be re-used even if
+the exact trigger point changes, so they can be used as regression tests.
+Screenshots are also recorded, but only used for visual debugging, not for the actual tests themselves.
+
+Output example (saved as `recording.txt`, in the scenario folder):
+
+```csv
+frame,0x0770:u8,0x0778:u8,0x077c:u80x359c:u16,0x360c:u8
+9311,0x0770=15,0x0778=1,0x077c=2,0x360c=0
+9312,0x359c=4489
+9313,0x359c=4490
+9342,0x0770=16,0x0778=0,0x359c=4491,0x360c=8
+```
+
+Note: Successfully tested with GBA, due to the different memory mapping of RA there it might not work yet with other
+consoles.
+Please let me know if you encounter problems for other platforms!
 
 ### 3. Set markers in the Scenario Viewer
 
 ```sh
-npx cruncheevos-playtest viewer     # -> http://localhost:8123
+npx cruncheevos-playtest viewer
 ```
 
-<!-- TODO(akleemans): viewer screenshot (or crop of the hero shot): frame stepper,
-     memory table with labels, per-condition panel -->
+Run the above, then open `http://localhost:8123` to open the viewer.
 
-Step through frames (←/→, shift=±10, ctrl=±60, space=play) with screenshots,
-all watched addresses (labels from your code notes, change highlighting),
-and — after picking an achievement — a color-coded state timeline plus
-**per-condition truth dots and hit counts for every frame**. When a test
-fails, this is where you find out which condition didn't do what you
-expected, on exactly the frame it didn't do it.
+![scenario-viewer](https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/scenario-viewer.png)
 
-Name the important frames with **markers** ("save-screen", "boss-dead", …).
-They're stored in the scenario's `meta.json` and become the frame references
-your tests use — no magic numbers.
+Step through frames (←/→, shift=±10, ctrl=±60, space=play) and the screenshots & watched addresses will change
+according to the recording.
+
+There are per-condition truth dots and hit counts for every frame, which help indicate when a condition is true.
+
+Name the important frames with **markers** ("save-screen", "boss-dead", etc.) when the achievements should pop,
+so you can use those in your tests.
 
 ### 4. Write tests
 
-```js
-// my-game/tests/progression.test.js
-import { describe, expect } from 'vitest';
-import { playtest, requireScenario, runAchievement } from 'cruncheevos-playtest/vitest';
-import set from '../my-game.js';
+This is an example of a test for a progression achievement, which should unlock on reaching the next level, but not if
+the player used a cheat.
 
-const scenario = (name, ...markers) =>
-  requireScenario(new URL(`../scenarios/${name}`, import.meta.url), ...markers);
+```js
+// monster-force/tests/progression.test.js
+import {describe, expect} from 'vitest';
+import {playtest, requireScenario, runAchievement} from 'cruncheevos-playtest/vitest';
+import set from '../monster-force.js';
+
+const getAchievement = (title) => Object.values(set.achievements).find((a) => a.title === title);
+const scenario = (name, ...markers) => requireScenario(new URL(`../scenarios/${name}`, import.meta.url), ...markers);
+
+describe('Level 1 progression achievement', () => {
+    const cheevo = getAchievement('Welcome to Monsterland');
+
+    playtest('pops when the next level is unlocked',
+        scenario('level1-finish', 'save-screen'), (scenario) => {
+            const result = runAchievement(cheevo, scenario);
+
+            expect(result.triggered).toBe(true);
+            expect(result.triggeredFrame).toBe(scenario.marker('save-screen'));
+        });
+
+    playtest('locks when invincibility cheat is enabled and doesnt pop achievement',
+        scenario('level1-finish-cheat-invincibility', 'cheat-on'), (scenario) => {
+            const result = runAchievement(cheevo, scenario);
+
+            expect(result.triggered).toBe(false);
+            expect(result.stateAt(scenario.marker('cheat-on'))).toBe('paused');
+        });
+});
 ```
 
-`playtest` is vitest's `it` with a guard: it skips (with instructions) until the scenario is recorded and
-has the markers the test needs — write the tests first if you like.
-Like a real emulator, triggers start in the `waiting` state and cannot pop
-on a recording's first frame.
+The structure follows vitest: A `describe` block should read what we're looking at, followed by a `playtest` description
+with a `scenario` and expectations.
 
-`runAchievement(achievementOrTriggerString, scenario)` returns a result with
-`triggered`, `triggeredFrame`, `stateAt(frame)`, `measuredAt(frame)`,
-`framesInState(state)` and `wasEver(state)`; scenarios offer `marker(name)`,
-`slice(fromFrame, toFrame)` and `valueAt(frame, address)`.
+(Like a real emulator, triggers start in the `waiting` state and cannot pop on a recording's first frame.)
+
+`runAchievement(cheevo, scenario)` returns a result with:
+
+* `triggered`
+* `triggeredFrame`
+* `stateAt(frame)`
+* `measuredAt(frame)`
+* `framesInState(state)`
+* `wasEver(state)`
+
+Scenarios offer:
+
+* `marker(name)`
+* `valueAt(frame, address)`
+* `slice(fromFrame, toFrame)`
+
 
 ## JS API
 
 ```js
-import { parseTrigger, runTrigger, TriggerRunner, Scenario,
-         parseRecording, bytesFromValues } from 'cruncheevos-playtest';
-import { loadScenario, runAchievement, requireScenario } from 'cruncheevos-playtest/testing';
+import {
+    parseTrigger, runTrigger, TriggerRunner, Scenario,
+    parseRecording, bytesFromValues
+} from 'cruncheevos-playtest';
+import {loadScenario, runAchievement, requireScenario} from 'cruncheevos-playtest/testing';
 ```
 
 The low-level engine works without scenarios or cruncheevos — feed
@@ -150,36 +176,27 @@ The low-level engine works without scenarios or cruncheevos — feed
 [how-achievements-work.md](how-achievements-work.md) for the
 trigger model itself (groups, flags, hit counts, Delta/Prior).
 
-## Fidelity
+## Achievement trigger evaluation
 
-The bundled engine is a line-faithful port of rcheevos' `src/rcheevos`
-evaluation core (develop branch): all condition flags, operand types and
-sizes, shared memrefs with Delta/Prior, hit counts, and the full trigger
-state machine. It is validated two ways (maintainer tooling, in this repo):
+The bundled engine is a port of the evaluation core
+of [rcheevos](https://github.com/RetroAchievements/rcheevos/tree/develop/src/rcheevos)
+(develop branch at 2026-06-04), ported to JavaScript by Claude Fable.
 
-- a unit suite ported from rcheevos' own tests (`npm test`)
-- a **differential fuzzer** (`tools/difftest/`) comparing per-frame state,
-  measured value and every hit count against the compiled C library on
-  randomly generated triggers — 100,000+ triggers × 40 frames with zero
-  divergence
-
-One deliberate divergence: upstream reads uninitialized memory (a stale
-union member) when the first of two consecutive SubSource conditions is a
-constant; this port implements the clearly intended arithmetic instead.
-
-Not ported: leaderboards, rich presence, the runtime/http client layers.
+The unit test suite from rcheevos and a differential fuzzer (`tools/difftest/`) were used to compare
+inputs/outputs per-frame state, measured value and every hit count against the compiled C library on
+randomly generated triggers.
 
 ## Package layout
 
 ```
-src/engine/       the rcheevos port (browser-safe, dependency-free)
+src/engine/       the rcheevos port
 src/              scenario format, discovery, watchlist, test helpers
-bin/cli.js        init | viewer | sync
+bin/cli.js        init, viewer, sync
 lua/              BizHawk recorder template
 scaffold/         files copied into game folders by `init`
-viewer/           Scenario Viewer (assets + server)
-test/             engine + format tests        (repo only, not published)
-tools/difftest/   fuzzer vs the C library      (repo only, not published)
+viewer/           Scenario viewer (assets + server)
+test/             engine + format tests (repo only, not published)
+tools/difftest/   fuzzer vs the C library (repo only, not published)
 ```
 
 ## License
