@@ -117,12 +117,12 @@ Links go to the RA docs, which have worked examples.
 | `A:` | [AddSource](https://docs.retroachievements.org/developer-docs/flags/addsource.html) | Adds its (possibly `*`/`&`/…-modified) left operand into the next condition's left operand. |
 | `B:` | [SubSource](https://docs.retroachievements.org/developer-docs/flags/subsource.html) | Same, but subtracts. |
 | `I:` | [AddAddress](https://docs.retroachievements.org/developer-docs/flags/addaddress.html) | Pointer indirection: adds its value to the *address* used by the next condition (both operands). |
-| `C:` | [AddHits](https://docs.retroachievements.org/developer-docs/flags/addhits.html) | Adds its own hit count into the next condition's hit-target check. |
-| `D:` | [SubHits](https://docs.retroachievements.org/developer-docs/flags/subhits.html) | Subtracts its hit count from the next condition's hit-target check. |
-| `N:` | [AndNext](https://docs.retroachievements.org/developer-docs/flags/andnext.html) | The next condition only counts as true if this one is also true. |
-| `O:` | [OrNext](https://docs.retroachievements.org/developer-docs/flags/ornext.html) | The next condition counts as true if either is true. |
+| `C:` | [AddHits](https://docs.retroachievements.org/developer-docs/flags/addhits-subhits.html) | Adds its own hit count into the next condition's hit-target check. |
+| `D:` | [SubHits](https://docs.retroachievements.org/developer-docs/flags/addhits-subhits.html) | Subtracts its hit count from the next condition's hit-target check. |
+| `N:` | [AndNext](https://docs.retroachievements.org/developer-docs/flags/andnext-ornext.html) | The next condition only counts as true if this one is also true. |
+| `O:` | [OrNext](https://docs.retroachievements.org/developer-docs/flags/andnext-ornext.html) | The next condition counts as true if either is true. |
 | `Z:` | [ResetNextIf](https://docs.retroachievements.org/developer-docs/flags/resetnextif.html) | While true, keeps the *next* condition's hit count at zero (scoped ResetIf). |
-| `K:` | [Remember](https://docs.retroachievements.org/developer-docs/flags/remember-recall.html) | Stores its computed value; later operands can read it back with `{recall}`. |
+| `K:` | [Remember](https://docs.retroachievements.org/developer-docs/flags/remember.html) | Stores its computed value; later operands can read it back with `{recall}`. |
 
 **Behavior flags:**
 
@@ -132,7 +132,7 @@ Links go to the RA docs, which have worked examples.
 | `P:` | [PauseIf](https://docs.retroachievements.org/developer-docs/flags/pauseif.html) | While true, freezes **its own group**: no hit counting, no resets from this group, group counts as false. With a hit target, the pause *latches* — once hit, the group stays paused until those hits are reset from another group. |
 | `T:` | [Trigger](https://docs.retroachievements.org/developer-docs/flags/trigger.html) | The condition must still be true to fire, but while everything *else* is true the achievement is "primed" (challenge indicator). |
 | `M:` | [Measured](https://docs.retroachievements.org/developer-docs/flags/measured.html) | Publishes progress (value or hit count) toward a target, e.g. "743/1000" under the badge. `G:` is the same but displayed as a percentage. |
-| `Q:` | [MeasuredIf](https://docs.retroachievements.org/developer-docs/flags/measuredif.html) | Progress is only shown/updated while this condition is true. |
+| `Q:` | [MeasuredIf](https://docs.retroachievements.org/developer-docs/flags/measured.html#using-measured-if-with-measured) | Progress is only shown/updated while this condition is true. |
 
 ## Evaluation order and subtleties
 
