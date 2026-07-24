@@ -181,7 +181,7 @@ trigger model itself (groups, flags, hit counts, Delta/Prior).
 
 The bundled engine is a port of the evaluation core
 of [rcheevos](https://github.com/RetroAchievements/rcheevos/tree/develop/src/rcheevos)
-(develop branch at 2026-07-04), ported to JavaScript by Claude Fable.
+(develop branch at 2026-07-23, commit `2ad0b86`), ported to JavaScript by Claude Fable.
 
 The unit test suite from rcheevos and a differential fuzzer (`tools/difftest/`) were used to compare
 inputs/outputs per-frame state, measured value and every hit count against the compiled C library on

@@ -6,6 +6,30 @@
 
 import { parseTrigger } from '../../src/engine/trigger.js';
 
+/** Build a peek callback over a Uint8Array, wrapping addresses like uint32_t. */
+export function makePeek(ram) {
+  return (address, numBytes) => {
+    let value = 0;
+    for (let i = numBytes - 1; i >= 0; i--) {
+      const a = (address + i) >>> 0;
+      value = value * 256 + (a < ram.length ? ram[a] : 0);
+    }
+    return value >>> 0;
+  };
+}
+
+/** Format one frame's outcome in the shared c-harness output format. */
+export function formatFrame(trigger, result) {
+  const groups = [];
+  if (trigger.requirement)
+    groups.push(trigger.requirement.conditions.map((c) => `${c.currentHits},`).join(''));
+  for (const alt of trigger.alternatives)
+    groups.push(alt.conditions.map((c) => `${c.currentHits},`).join(''));
+
+  return `${result} ${trigger.state} ${trigger.measuredValue >>> 0} ${trigger.hasHits ? 1 : 0} | ` +
+    groups.join(' / ');
+}
+
 export function runCase(definition, frames /* array of Uint8Array */) {
   const lines = [];
 
@@ -16,28 +40,8 @@ export function runCase(definition, frames /* array of Uint8Array */) {
     return [`PARSE_ERROR ${e.code ?? e.message}`];
   }
 
-  for (const ram of frames) {
-    const peek = (address, numBytes) => {
-      let value = 0;
-      for (let i = numBytes - 1; i >= 0; i--) {
-        const a = (address + i) >>> 0; /* wrap like uint32_t arithmetic */
-        value = value * 256 + (a < ram.length ? ram[a] : 0);
-      }
-      return value >>> 0;
-    };
-
-    const result = trigger.evaluate(peek);
-
-    const groups = [];
-    if (trigger.requirement)
-      groups.push(trigger.requirement.conditions.map((c) => `${c.currentHits},`).join(''));
-    for (const alt of trigger.alternatives)
-      groups.push(alt.conditions.map((c) => `${c.currentHits},`).join(''));
-
-    lines.push(
-      `${result} ${trigger.state} ${trigger.measuredValue >>> 0} ${trigger.hasHits ? 1 : 0} | ` +
-      groups.join(' / '));
-  }
+  for (const ram of frames)
+    lines.push(formatFrame(trigger, trigger.evaluate(makePeek(ram))));
 
   return lines;
 }

@@ -22,11 +22,11 @@
 import {
   parseOperand, operandSetFloatConst, operandIsFloat,
   operatorIsModifying, operandAddSource, evaluateOperand, constOperand,
-  operandTypeIsMemref,
 } from './operand.js';
 import {
   ParseError, SIZE_32, SIZE_FLOAT, OP_ADD_ACCUMULATOR, OP_SUB_ACCUMULATOR,
-  OP_SUB_PARENT, MEMREF_PLAIN, transformMemrefValue,
+  OP_SUB_PARENT, MEMREF_PLAIN, transformMemrefValue, getModifiedMemrefValue,
+  readStrtoul,
 } from './memref.js';
 import { U32, typedValue, compare as typedCompare, combine as typedCombine } from './typed-value.js';
 
@@ -259,19 +259,19 @@ export function parseCondition(cursor, parse) {
     condition.operand2 = constOperand(0);
   }
 
-  /* hit target: "(10)" or legacy ".10." */
+  /* hit target: "(10)" or legacy ".10." (strtoul semantics, truncated to
+   * unsigned like C's cast) */
   condition.requiredHits = 0;
   const hitOpen = s[cursor.i];
   if (hitOpen === '(' || hitOpen === '.') {
     const close = hitOpen === '(' ? ')' : '.';
     cursor.i++;
-    const start = cursor.i;
-    while (cursor.i < s.length && s[cursor.i] >= '0' && s[cursor.i] <= '9') cursor.i++;
-    if (cursor.i === start || s[cursor.i] !== close)
+    const value = readStrtoul(cursor, 10);
+    if (value === null || s[cursor.i] !== close)
       throw new ParseError('RC_INVALID_REQUIRED_HITS', cursor);
 
     if (condition.oper !== 'none') {
-      condition.requiredHits = parseInt(s.slice(start, cursor.i), 10) >>> 0;
+      condition.requiredHits = Number(value & 0xffffffffn);
       parse.hasRequiredHits = true;
     }
     cursor.i++;
@@ -336,28 +336,23 @@ export function conditionUpdateParseState(condition, parse) {
             newSize, parse.addsourceParent, OP_SUB_PARENT, zero);
           /* upstream keeps the previous operand's type here, so the next
            * chain step reads the negated accumulator through that access
-           * type (delta/prior/bcd/inverted) - mirror that... */
+           * type (delta/prior/bcd/inverted) */
           parse.addsourceParent = {
             ...parse.addsourceParent,
             memref: negate,
             size: zero.size,
           };
-          /* ...except when the previous SubSource was a constant: there the
-           * stale const/fp type makes upstream read heap-pointer bits through
-           * the union (nondeterministic UB). Implement the clearly intended
-           * behavior instead: a plain read of the negated accumulator. */
-          const staleType = parse.addsourceParent.type;
-          if (staleType === 'const' || staleType === 'fp' || staleType === 'func' ||
-              (staleType === 'recall' &&
-               !operandTypeIsMemref(parse.addsourceParent.memrefAccessType))) {
-            parse.addsourceParent.type = 'address';
-            parse.addsourceParent.memrefAccessType = 'address';
-          }
+
+          /* an integer-constant parent is folded to its negated value at
+           * parse time (rcheevos #528); float-constant and const-bound
+           * {recall} parents still read heap-pointer bits upstream (UB),
+           * so there is no defined behavior to mirror for those */
+          if (parse.addsourceParent.type === 'const')
+            parse.addsourceParent.num = getModifiedMemrefValue(negate, null);
         }
 
         /* subtract the condition from the chain */
-        parse.addsourceOper = isMemrefOperand(parse.addsourceParent)
-          ? OP_SUB_ACCUMULATOR : OP_SUB_PARENT;
+        parse.addsourceOper = OP_SUB_ACCUMULATOR;
         const condOperand = conditionConvertToOperand(condition, parse);
         operandAddSource(condOperand, parse, newSize);
         parse.addsourceParent = condOperand;

@@ -56,12 +56,7 @@ function randomOperand(rand, { allowRecall }) {
 
 function randomCondition(rand, state) {
   const flag = pick(rand, FLAGS);
-  /* upstream rcheevos has UB (stale operand type reading pointer bits) when
-   * the first of consecutive SubSources is a constant - don't generate it */
-  let op1 = randomOperand(rand, state);
-  if (flag === 'B:') {
-    while (!/^[dpb~]?(0x|f[A-Za-z])/.test(op1)) op1 = randomOperand(rand, state);
-  }
+  const op1 = randomOperand(rand, state);
   const isCombiningSource = flag === 'A:' || flag === 'B:' || flag === 'I:' || flag === 'K:';
 
   if (flag === 'K:') state.allowRecall = true;
@@ -100,7 +95,17 @@ function randomTrigger(rand) {
     }
     const condCount = 1 + Math.floor(rand() * 5);
     const conds = [];
-    for (let c = 0; c < condCount; c++) conds.push(randomCondition(rand, state));
+    for (let c = 0; c < condCount; c++) {
+      let cond = randomCondition(rand, state);
+      /* upstream rcheevos still has UB when a SubSource whose left operand
+       * is a float constant or {recall} is directly followed by another
+       * SubSource (negating the accumulator leaves a stale operand type
+       * that reads pointer bits) - don't generate that pair. Integer
+       * constants are fine since rcheevos #528. */
+      while (cond.startsWith('B:') && /^B:(f\d|\{recall\})/.test(conds[c - 1] ?? ''))
+        cond = randomCondition(rand, state);
+      conds.push(cond);
+    }
     groups.push(conds.join('_'));
   }
   return groups.join('S');

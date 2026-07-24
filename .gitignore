@@ -1,4 +1,5 @@
 node_modules/
 *.log
 tools/difftest/c-harness
+tools/difftest/corpus/
 .idea/

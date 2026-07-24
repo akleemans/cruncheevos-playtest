@@ -172,6 +172,55 @@ function isHexDigit(ch) {
   return (ch >= '0' && ch <= '9') || (ch >= 'a' && ch <= 'f') || (ch >= 'A' && ch <= 'F');
 }
 
+const STRTOUL_WHITESPACE = new Set([' ', '\t', '\n', '\v', '\f', '\r']);
+const ULONG_MAX = (1n << 64n) - 1n;
+
+/**
+ * Mirrors C's strtoul(s + cursor.i, &end, radix), which rcheevos uses for
+ * addresses, constants and hit targets: optional whitespace, optional sign
+ * (negative wraps like a 64-bit unsigned long, saturating at ULONG_MAX on
+ * overflow), and for base 16 an optional "0x"/"0X" prefix. Live sets rely
+ * on the prefix tolerance (e.g. "0xH0x8000001e").
+ *
+ * Returns the value as a BigInt in [0, 2^64-1] and advances the cursor,
+ * or returns null (cursor untouched) if no digits were consumed.
+ */
+export function readStrtoul(cursor, radix) {
+  const s = cursor.s;
+  let i = cursor.i;
+
+  while (i < s.length && STRTOUL_WHITESPACE.has(s[i])) i++;
+
+  let negative = false;
+  if (s[i] === '+' || s[i] === '-') {
+    negative = s[i] === '-';
+    i++;
+  }
+
+  const digitOk = radix === 16 ? isHexDigit : (ch) => ch >= '0' && ch <= '9';
+  if (radix === 16 && s[i] === '0' && (s[i + 1] === 'x' || s[i + 1] === 'X') &&
+      digitOk(s[i + 2] ?? '')) {
+    i += 2;
+  }
+
+  const start = i;
+  const base = BigInt(radix);
+  let value = 0n;
+  let overflow = false;
+  for (; i < s.length && digitOk(s[i]); i++) {
+    if (!overflow) {
+      value = value * base + BigInt(parseInt(s[i], radix));
+      if (value > ULONG_MAX) overflow = true;
+    }
+  }
+  if (i === start) return null;
+
+  cursor.i = i;
+  if (overflow) return ULONG_MAX;
+  if (negative && value !== 0n) return (1n << 64n) - value;
+  return value;
+}
+
 /** Mirrors rc_parse_memref. Returns {size, address}, advances cursor. */
 export function parseMemref(cursor) {
   const s = cursor.s;
@@ -203,14 +252,11 @@ export function parseMemref(cursor) {
     throw new ParseError('RC_INVALID_MEMORY_OPERAND', cursor);
   }
 
-  const start = i;
-  while (i < s.length && isHexDigit(s[i])) i++;
-  if (i === start) throw new ParseError('RC_INVALID_MEMORY_OPERAND', cursor);
-
-  let address = parseInt(s.slice(start, i), 16);
-  if (address > 0xffffffff) address = 0xffffffff;
-
   cursor.i = i;
+  const value = readStrtoul(cursor, 16);
+  if (value === null) throw new ParseError('RC_INVALID_MEMORY_OPERAND', cursor);
+
+  const address = value > 0xffffffffn ? 0xffffffff : Number(value);
   return { size, address: address >>> 0 };
 }
 

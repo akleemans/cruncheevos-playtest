@@ -50,6 +50,18 @@ test('operand sizes', () => {
   }
 });
 
+test('redundant 0x prefix inside an address (strtoul tolerance)', () => {
+  const { peek } = makeMemory([0x8a, 0x12]);
+
+  /* live sets contain e.g. "0xH0x8000001e" - C parses the address with
+   * strtoul(base 16), which absorbs a second "0x" */
+  assert.equal(parseTrigger('0xH0x0000=138').test(peek), true);
+  assert.equal(parseTrigger('0xH0X0001=18').test(peek), true);
+
+  /* but a doubled prefix with no size char stays invalid */
+  assert.throws(() => parseTrigger('0x0x0000=138'));
+});
+
 test('BCD and inverted operands', () => {
   const { peek } = makeMemory([0x86, 0x12, 0x34, 0xab, 0x56]);
 
@@ -235,6 +247,25 @@ test('SubSource subtracts operands', () => {
   assert.equal(trigger.test(peek), true); /* -2+12 = 10 */
   ram[1] = 11;
   assert.equal(trigger.test(peek), false);
+});
+
+test('SubSource with a constant', () => {
+  const { ram, peek } = makeMemory([0x00, 0x12]);
+  const trigger = parseTrigger('B:1_0xH0001=10');
+
+  assert.equal(trigger.test(peek), false); /* -1+18 = 17 */
+  ram[1] = 11;
+  assert.equal(trigger.test(peek), true); /* -1+11 = 10 */
+});
+
+test('SubSource chain starting with a constant', () => {
+  const { ram, peek } = makeMemory([0x00, 0x12]);
+  /* rcheevos #528: the constant is negated at parse time */
+  const trigger = parseTrigger('B:1_B:0xH0000_0xH0001=10');
+
+  assert.equal(trigger.test(peek), false); /* -1-0+18 = 17 */
+  ram[0] = 7;
+  assert.equal(trigger.test(peek), true); /* -1-7+18 = 10 */
 });
 
 test('AddSource result wraps like uint32', () => {

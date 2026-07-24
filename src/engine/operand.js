@@ -15,7 +15,7 @@
 
 import {
   parseMemref, memrefSharedSize, memrefMask, transformMemrefValue,
-  getMemrefValue, ParseError, OP_INDIRECT_READ,
+  getMemrefValue, ParseError, OP_INDIRECT_READ, readStrtoul,
   SIZE_32, SIZE_FLOAT, SIZE_LOW, SIZE_HIGH, SIZE_8, SIZE_16, SIZE_16_BE,
   SIZE_24, SIZE_24_BE, SIZE_32_BE, SIZE_VARIABLE, memsizeIsFloat,
   MEMREF_MODIFIED,
@@ -216,9 +216,9 @@ export function parseOperand(cursor, parse) {
         throw new ParseError('RC_INVALID_CONST_OPERAND', cursor);
       }
       cursor.i++;
-      const value = readUnsignedDigits(cursor, 16);
+      const value = readStrtoul(cursor, 16);
       if (value === null) throw new ParseError('RC_INVALID_CONST_OPERAND', cursor);
-      operandSetConst(operand, Math.min(value, 0xffffffff));
+      operandSetConst(operand, value > 0xffffffffn ? 0xffffffff : Number(value));
       break;
     }
 
@@ -237,7 +237,7 @@ export function parseOperand(cursor, parse) {
       if (s[cursor.i] === '-') { negative = true; cursor.i++; }
       else if (s[cursor.i] === '+') cursor.i++;
 
-      let value = readUnsignedDigits(cursor, 10);
+      let value = readStrtoul(cursor, 10);
 
       if (s[cursor.i] === '.' && allowDecimal) {
         cursor.i++;
@@ -248,20 +248,26 @@ export function parseOperand(cursor, parse) {
         const fracValue = parseInt(s.slice(fracStart, fracStart + fracDigits), 10);
         const shift = Math.pow(10, fracDigits);
 
+        /* the integer part is an unsigned long; the negative branch reads
+         * it back through a signed cast like C does */
+        const intPart = value ?? 0n;
+        const signedPart = Number(intPart >= (1n << 63n) ? intPart - (1n << 64n) : intPart);
+
         let dbl;
         if (fracValue !== 0) {
           const dblFraction = fracValue / shift;
-          dbl = negative ? -(value ?? 0) - dblFraction : (value ?? 0) + dblFraction;
+          dbl = negative ? -signedPart - dblFraction : Number(intPart) + dblFraction;
         } else {
-          dbl = negative ? -(value ?? 0) : (value ?? 0);
+          dbl = negative ? -signedPart : Number(intPart);
         }
         operandSetFloatConst(operand, dbl);
       } else {
         if (value === null) {
           throw new ParseError(allowDecimal ? 'RC_INVALID_FP_OPERAND' : 'RC_INVALID_CONST_OPERAND', cursor);
         }
-        if (value > 0x7fffffff) value = 0x7fffffff;
-        operandSetConst(operand, negative ? (-value >>> 0) : value);
+        if (value > 0x7fffffffn) value = 0x7fffffffn;
+        const num = Number(value);
+        operandSetConst(operand, negative ? (-num >>> 0) : num);
       }
       break;
     }
@@ -279,9 +285,9 @@ export function parseOperand(cursor, parse) {
       /* fallthrough - plain decimal constant */
     case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9': {
-      const value = readUnsignedDigits(cursor, 10);
+      const value = readStrtoul(cursor, 10);
       if (value === null) throw new ParseError('RC_INVALID_CONST_OPERAND', cursor);
-      operandSetConst(operand, Math.min(value, 0xffffffff));
+      operandSetConst(operand, value > 0xffffffffn ? 0xffffffff : Number(value));
       break;
     }
 
