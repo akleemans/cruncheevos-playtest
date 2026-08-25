@@ -3,12 +3,18 @@
 **Test framework** for [cruncheevos](https://github.com/suXinjke/cruncheevos) - record emulator memory as
 **test scenarios** and write test for your achievements to check when exactly they should pop (or not)!
 
+**Tutorial/Demo**:
+
+[![Tutorial and Demo](video.png)](https://youtu.be/6ZI08izF168 "How to write tests for achievements")
+
+
 Features:
 
 * Lua scripts for recording test scenarios (relevant memory + screenshots) in BizHawk
 * Test scenario viewer to walk through scenarios and set marker frames (anchors for writing tests)
-* JS API for writing tests & validation (based on rcheevos trigger runtime):
+* JS API for writing tests & validation (based on rcheevos trigger runtime)
 
+Example test:
 ```js
 describe('Finish the first level', () => {
     test('pops exactly when the next level is unlocked at the save screen', () => {
