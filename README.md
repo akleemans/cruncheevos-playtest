@@ -3,9 +3,13 @@
 **Test framework** for [cruncheevos](https://github.com/suXinjke/cruncheevos) - record emulator memory as
 **test scenarios** and write test for your achievements to check when exactly they should pop (or not)!
 
-**Tutorial/Demo**:
+**Tutorial for writing tests**:
 
-[![Tutorial and Demo](video.png)](https://youtu.be/6ZI08izF168 "How to write tests for achievements")
+[![Tutorial: Write tests](video-tests.png)](https://youtu.be/6ZI08izF168 "How to write tests for achievements")
+
+**Debug using the Scenario Viewer**:
+
+[![Debug using the Scenario Viewer](video-debug.png)](https://youtu.be/vO2M1EkhC1E "Debug Achievements with the Scenario Viewer")
 
 
 Features:
