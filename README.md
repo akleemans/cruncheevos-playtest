@@ -9,7 +9,7 @@
 
 **Debug using the Scenario Viewer**:
 
-[![Debug using the Scenario Viewer](video-debug.png)](https://youtu.be/vO2M1EkhC1E "Debug Achievements with the Scenario Viewer")
+[![Debug using the Scenario Viewer](video-debug.png)](https://youtu.be/Y2r2bJFaLZ4 "Debug Achievements with the Scenario Viewer")
 
 
 Features:
