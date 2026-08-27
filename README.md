@@ -35,7 +35,7 @@ describe('Finish the first level', () => {
 
 ## Getting started
 
-In your personal cruncheevos scripts repo:
+In your personal cruncheevos scripts repo, install the [npm package cruncheevos-playtest](https://www.npmjs.com/package/cruncheevos-playtest):
 
 ```sh
 npm install --save-dev cruncheevos-playtest vitest
