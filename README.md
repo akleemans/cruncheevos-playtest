@@ -3,13 +3,9 @@
 **Test framework** for [cruncheevos](https://github.com/suXinjke/cruncheevos) - record emulator memory as
 **test scenarios** and write test for your achievements to check when exactly they should pop (or not)!
 
-**Tutorial for writing tests**:
+**Tutorials (Youtube)**:
 
-[![Tutorial: Write tests](video-tests.png)](https://youtu.be/6ZI08izF168 "How to write tests for achievements")
-
-**Debug using the Scenario Viewer**:
-
-[![Debug using the Scenario Viewer](video-debug.png)](https://youtu.be/Y2r2bJFaLZ4 "Debug Achievements with the Scenario Viewer")
+[![Tutorial: Write tests](video-tests.png)](https://youtu.be/6ZI08izF168 "How to write tests for achievements") [![Debug using the Scenario Viewer](video-debug.png)](https://youtu.be/Y2r2bJFaLZ4 "Debug Achievements with the Scenario Viewer")
 
 
 Features:
@@ -32,6 +28,10 @@ describe('Finish the first level', () => {
     });
 });
 ```
+
+⚠️ This library is still experimental! Known restrictions:
+- Only tested for Game Boy and GBA so far. Let me know if you want to try it for other platforms (especially the Lua recording script needs changes for other platforms).
+- Pointers are not supported yet - only static Code notes are recorded so far.
 
 ## Getting started
 
@@ -92,10 +92,6 @@ frame,0x0770:u8,0x0778:u8,0x077c:u8,0x359c:u16,0x360c:u8
 9313,0x359c=4490
 9342,0x0770=16,0x0778=0,0x359c=4491,0x360c=8
 ```
-
-Note: Successfully tested with GBA, due to the different memory mapping of RA there it might not work yet with other
-consoles.
-Please let me know if you encounter problems for other platforms!
 
 ### 3. Set markers in the Scenario Viewer
 
