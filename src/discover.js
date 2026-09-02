@@ -32,8 +32,11 @@ export function loadConfig(root = process.cwd()) {
 /**
  * Find all scenario folders (directories containing recording.txt) under
  * root, up to a few levels deep. Returns repo-relative paths, sorted.
+ *
+ * `scope` (a root-relative folder) restricts the scan to that subtree; ids
+ * stay root-relative either way.
  */
-export function findScenarioDirs(root, maxDepth = 4) {
+export function findScenarioDirs(root, { maxDepth = 4, scope = null } = {}) {
   const found = [];
 
   const walk = (dir, depth) => {
@@ -56,16 +59,29 @@ export function findScenarioDirs(root, maxDepth = 4) {
     }
   };
 
-  walk(root, 0);
+  walk(scope ? resolve(root, scope) : root, 0);
   return found.sort();
 }
 
 const SET_FILE_EXCLUDE = /(\.test\.|\.spec\.|\.config\.|^index\.js$|^eslint|^vitest)/;
 
-/** Candidate set files: .js at root or one directory deep (unless configured). */
-function candidateSetFiles(root, config) {
-  if (Array.isArray(config.sets)) return config.sets.map((p) => join(root, p));
+/** True when file (absolute) lives inside <root>/<scope>. */
+function inScope(root, scope, file) {
+  const rel = relative(resolve(root, scope), file);
+  return rel !== '' && !rel.startsWith('..');
+}
 
+/**
+ * Candidate set files: .js in the scan base or one directory deep (unless
+ * configured). The scan base is <root>/<scope> when scoped, else root.
+ */
+function candidateSetFiles(root, config, scope = null) {
+  if (Array.isArray(config.sets)) {
+    const configured = config.sets.map((p) => join(root, p));
+    return scope ? configured.filter((f) => inScope(root, scope, f)) : configured;
+  }
+
+  const base = scope ? resolve(root, scope) : root;
   const candidates = [];
   const scanDir = (dir) => {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
@@ -74,11 +90,11 @@ function candidateSetFiles(root, config) {
     }
   };
 
-  scanDir(root);
-  for (const entry of readdirSync(root, { withFileTypes: true })) {
+  scanDir(base);
+  for (const entry of readdirSync(base, { withFileTypes: true })) {
     if (entry.isDirectory() && !SKIP_DIRS.has(entry.name) && !entry.name.startsWith('.') &&
         !['scenarios', 'tests', 'test', 'src', 'bin'].includes(entry.name)) {
-      try { scanDir(join(root, entry.name)); } catch { /* unreadable */ }
+      try { scanDir(join(base, entry.name)); } catch { /* unreadable */ }
     }
   }
   return candidates;
@@ -89,11 +105,13 @@ function candidateSetFiles(root, config) {
  * [{ set, title, definition, file }]. Files that fail to import or don't
  * export a set are skipped silently (auto-scan mode) - the consumer repo
  * legitimately contains non-set .js files.
+ *
+ * `scope` (a root-relative folder) limits the search to that subtree.
  */
-export async function discoverAchievements(root, config = {}) {
+export async function discoverAchievements(root, config = {}, { scope = null } = {}) {
   const achievements = [];
 
-  for (const file of candidateSetFiles(root, config)) {
+  for (const file of candidateSetFiles(root, config, scope)) {
     if (!existsSync(file) || !statSync(file).isFile()) continue;
     try {
       const module = await import(pathToFileURL(file));

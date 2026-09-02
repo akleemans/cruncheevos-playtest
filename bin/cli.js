@@ -4,14 +4,15 @@
  * cruncheevos-playtest CLI. Run from your achievement-scripts repo:
  *
  *   cruncheevos-playtest init <gameDir>       scaffold a game folder
- *   cruncheevos-playtest viewer [--port N]    Scenario Viewer for this repo
+ *   cruncheevos-playtest viewer [<gameDir>]
+ *       Scenario Viewer for this repo, or for one game folder only
  *   cruncheevos-playtest sync <gameDir> [--check]
  *       regenerate <gameDir>/watchlist.lua from the code notes, verify it
  *       covers every address the game's achievements read, and refresh the
  *       labels stored in existing scenarios (--check: verify only)
  */
 
-import { readFileSync, writeFileSync, copyFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, copyFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname, resolve, basename, relative } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -25,8 +26,10 @@ const HELP = `cruncheevos-playtest - playtest RetroAchievements achievements
 Usage:
   cruncheevos-playtest init <gameDir>        scaffold a game folder (recorder,
                                              config, scenarios/, tests/)
-  cruncheevos-playtest viewer [--port N]     open the Scenario Viewer for the
-                                             current repo (default port 8123)
+  cruncheevos-playtest viewer [<gameDir>]    open the Scenario Viewer (port
+                                             8123). With <gameDir>, show only
+                                             the scenarios and achievements
+                                             inside that folder
   cruncheevos-playtest sync <gameDir>        sync everything derived from the
                                              game's code notes: regenerate
                                              watchlist.lua, verify it covers all
@@ -73,7 +76,7 @@ Next steps:
   2. edit ${gameDir}/recorder-config.lua (game name, console)
   3. cruncheevos-playtest sync ${gameDir}
   4. record: load ${gameDir}/record-scenario.lua in BizHawk's Lua Console
-  5. cruncheevos-playtest viewer  ->  set markers on your recordings
+  5. cruncheevos-playtest viewer ${gameDir}  ->  set markers on your recordings
   6. write tests in ${gameDir}/tests/ (see example.test.js), run with vitest
 `);
 }
@@ -81,10 +84,18 @@ Next steps:
 /* ------------------------------------------------------------------ */
 
 async function viewer() {
-  const portFlag = args.find((a) => a.startsWith('--port'));
-  const port = portFlag ? Number(portFlag.split('=')[1] ?? positional[0]) : 8123;
+  const usage = 'usage: cruncheevos-playtest viewer [<gameDir>]';
+  if (positional.length > 1 || flags.size) fail(usage);
+
+  let scope = positional[0] ?? null;
+  if (scope !== null) {
+    if (!(existsSync(scope) && statSync(scope).isDirectory())) fail(`no such directory: ${scope}`);
+    scope = relative(process.cwd(), resolve(scope)) || null; /* "." means the whole repo */
+    if (scope?.startsWith('..')) fail(`${positional[0]} is outside the current repo`);
+  }
+
   const { startViewer } = await import(pathToFileURL(join(packageDir, 'viewer', 'serve.js')));
-  startViewer({ root: process.cwd(), port: Number.isFinite(port) ? port : 8123 });
+  startViewer({ root: process.cwd(), scope });
 }
 
 /* ------------------------------------------------------------------ */

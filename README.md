@@ -96,10 +96,13 @@ frame,0x0770:u8,0x0778:u8,0x077c:u8,0x359c:u16,0x360c:u8
 ### 3. Set markers in the Scenario Viewer
 
 ```sh
-npx cruncheevos-playtest viewer
+npx cruncheevos-playtest viewer                 # everything in the repo
+npx cruncheevos-playtest viewer monster-force   # only that game folder
 ```
 
 Run the above, then open `http://localhost:8123` to open the viewer.
+With a game folder argument, only the scenarios and achievements inside that folder are listed -
+handy once the repo holds several games.
 
 ![scenario-viewer](https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/scenario-viewer.png)
 

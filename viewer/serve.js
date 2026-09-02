@@ -1,11 +1,13 @@
 /**
  * Scenario Viewer server. Zero dependencies. Started by the CLI:
  *
- *   npx cruncheevos-playtest viewer   (from your achievement-scripts repo)
+ *   npx cruncheevos-playtest viewer              (whole achievement-scripts repo)
+ *   npx cruncheevos-playtest viewer <gameDir>    (one game folder only)
  *
  * Viewer assets and the engine are served from the installed package;
  * scenario data and achievement sets come from the consumer repo (`root`),
  * discovered by scanning - any folder layout works (see src/discover.js).
+ * An optional `scope` (a root-relative folder) narrows that scan to one game.
  *
  * API (scenario ids are root-relative folder paths):
  *   GET  /api/scenarios                list of { id, ...meta }
@@ -18,7 +20,7 @@
 
 import { createServer } from 'node:http';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
-import { join, resolve, normalize, extname, dirname } from 'node:path';
+import { join, resolve, normalize, extname, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { findScenarioDirs, discoverAchievements, loadConfig } from '../src/discover.js';
 
@@ -50,9 +52,16 @@ function readBody(req) {
   });
 }
 
-export function startViewer({ root = process.cwd(), port = 8123 } = {}) {
+export function startViewer({ root = process.cwd(), port = 8123, scope = null } = {}) {
   root = resolve(root);
   const config = loadConfig(root);
+
+  /* optional folder scope: only show scenarios and sets under <root>/<scope> */
+  if (scope) {
+    scope = relative(root, resolve(root, scope));
+    if (!scope || scope.startsWith('..'))
+      throw new Error('viewer scope must be a folder inside the repo');
+  }
 
   /* resolve a scenario id (root-relative path) safely */
   const scenarioDir = (id) => {
@@ -69,7 +78,7 @@ export function startViewer({ root = process.cwd(), port = 8123 } = {}) {
 
       if (path === '/api/scenarios') {
         const list = [];
-        for (const rel of findScenarioDirs(root)) {
+        for (const rel of findScenarioDirs(root, { scope })) {
           let meta = {};
           try {
             meta = JSON.parse(await readFile(join(root, rel, 'meta.json'), 'utf8'));
@@ -121,7 +130,7 @@ export function startViewer({ root = process.cwd(), port = 8123 } = {}) {
       }
 
       if (path === '/api/achievements')
-        return sendJson(res, await discoverAchievements(root, config));
+        return sendJson(res, await discoverAchievements(root, config, { scope }));
 
       /* viewer assets + engine, served from the installed package */
       if (path === '/') {
@@ -145,7 +154,7 @@ export function startViewer({ root = process.cwd(), port = 8123 } = {}) {
   });
 
   server.listen(port, () => {
-    console.log(`Scenario Viewer: http://localhost:${port}  (scenarios from ${root})`);
+    console.log(`Scenario Viewer: http://localhost:${port}  (scenarios from ${join(root, scope ?? '')})`);
   });
 
   return server;
