@@ -104,6 +104,19 @@ Run the above, then open `http://localhost:8123` to open the viewer.
 With a game folder argument, only the scenarios and achievements inside that folder are listed -
 handy once the repo holds several games.
 
+Achievement sets are found by scanning the repo, so no configuration is needed. Only `.js` files that
+read like a cruncheevos set - they import `@cruncheevos/core` and `export default` - are ever loaded, so
+the other scripts a game folder collects are left alone. To name the sets explicitly instead, add to your
+`package.json`:
+
+```json
+{
+  "cruncheevosPlaytest": {
+    "sets": ["monster-force/monster-force.js", "mr-do/mr-do.js"]
+  }
+}
+```
+
 ![scenario-viewer](https://raw.githubusercontent.com/akleemans/cruncheevos-playtest/main/assets/scenario-viewer.png)
 
 Step through frames with left/right (shift=10 frames, ctrl=60 frames, space=play) and the screenshots & watched addresses will change
