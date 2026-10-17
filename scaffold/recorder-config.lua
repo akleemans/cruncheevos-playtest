@@ -7,7 +7,7 @@ return {
 
     -- this game
     game = "My Game",
-    console = "GBA",              -- "GBA" | "GB" | "GBC" | "FDS" | "raw"
+    console = "GBA",              -- "GBA" | "GB" | "GBC" | "FDS" | "SMS" | "GG" | "raw"
 
     -- optional (defaults shown)
     -- memory_domain = nil,       -- BizHawk domain, only for console = "raw"

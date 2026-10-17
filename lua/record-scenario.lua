@@ -49,6 +49,8 @@ local SCENARIO = {
 --   "GBA"   0x0000-0x7FFF -> IWRAM, 0x8000-0x47FFF -> EWRAM, rest -> SRAM
 --   "GB"    RA address == Game Boy bus address        -> System Bus
 --   "FDS"   RA address == FDS bus address             -> System Bus
+--   "SMS"   RA address == offset into 8KB work RAM    -> Main RAM
+--   "GG"    RA address == offset into 8KB work RAM    -> Main RAM
 --   "raw"   no translation; reads memory_domain (or the console default)
 local CONSOLE = CFG.console or "GBA"
 local MEMORY_DOMAIN = CFG.memory_domain
@@ -97,6 +99,8 @@ local function translate(raAddress)
         end
     elseif CONSOLE == "GB" or CONSOLE == "GBC" or CONSOLE == "FDS" then
         return "System Bus", raAddress
+    elseif CONSOLE == "SMS" or CONSOLE == "GG" then
+        return "Main RAM", raAddress
     else -- "raw"
         return MEMORY_DOMAIN, raAddress
     end
