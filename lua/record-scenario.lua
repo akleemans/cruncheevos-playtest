@@ -48,6 +48,7 @@ local SCENARIO = {
 -- to a BizHawk domain:
 --   "GBA"   0x0000-0x7FFF -> IWRAM, 0x8000-0x47FFF -> EWRAM, rest -> SRAM
 --   "GB"    RA address == Game Boy bus address        -> System Bus
+--   "FDS"   RA address == FDS bus address             -> System Bus
 --   "raw"   no translation; reads memory_domain (or the console default)
 local CONSOLE = CFG.console or "GBA"
 local MEMORY_DOMAIN = CFG.memory_domain
@@ -94,7 +95,7 @@ local function translate(raAddress)
         else
             return "SRAM", raAddress - 0x48000
         end
-    elseif CONSOLE == "GB" or CONSOLE == "GBC" then
+    elseif CONSOLE == "GB" or CONSOLE == "GBC" or CONSOLE == "FDS" then
         return "System Bus", raAddress
     else -- "raw"
         return MEMORY_DOMAIN, raAddress
